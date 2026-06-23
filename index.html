@@ -482,9 +482,9 @@ function drawWheel(angle) {
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
+    ctx.font = 'bold 15px "Barlow Condensed", sans-serif';
     var lines = s.label.split('\n');
-    var lineH = 13;
+    var lineH = 16;
     var textR = r - 14;
     lines.forEach(function(line, li) {
       var yOff = (li - (lines.length - 1) / 2) * lineH;

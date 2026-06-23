@@ -417,22 +417,21 @@
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQ03KgdUdcqSYkC0i1npQN-lQwcRwa7Krg_ZzwacFJJhjR1McoMmdnKT8IH6kRemA3dQ/exec';
 
-// ── SECTORS (12, alternant roig/gris com el PDF) ─────────────────────────────
+// ── SECTORS — 11 caselles: 4 BL + 4 TA + 1 DC + 1 G + 1 LP ─────────────────
 var SECTORS = [
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
   { label: 'Discount\nCoupon',        color: '#D9D8D6', id: 'discount'    },
+  { label: 'Lurbel Pack',              color: '#E2001A', id: 'lurbel_pack' },
+  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Better Luck\nNext Time!', color: '#D9D8D6', id: 'better_luck' },
-  { label: 'Lurbel Pack',             color: '#E2001A', id: 'lurbel_pack' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Gift',                    color: '#D9D8D6', id: 'gift'        },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Gift',                     color: '#D9D8D6', id: 'gift'        },
+  { label: 'Try Again',                color: '#E2001A', id: 'try_again'   },
 ];
 
 // ── STATE ────────────────────────────────────────────────────────────────────
@@ -482,9 +481,9 @@ function drawWheel(angle) {
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 15px "Barlow Condensed", sans-serif';
+    ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
     var lines = s.label.split('\n');
-    var lineH = 16;
+    var lineH = 13;
     var textR = r - 14;
     lines.forEach(function(line, li) {
       var yOff = (li - (lines.length - 1) / 2) * lineH;
@@ -594,15 +593,17 @@ var PRIZE_INFO = {
   'Lurbel Pack': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado\nel Lurbel Pack!',
-    body: 'El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega de tu premio.',
+    title: '¡Has ganado
+el Lurbel Pack!',
+    body: '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎉'
   },
   'Gift': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado\nun regalo!',
+    title: '¡Has ganado
+un regalo sorpresa!',
     body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎁'
@@ -610,16 +611,27 @@ var PRIZE_INFO = {
   'Discount Coupon': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado\nun cupón descuento!',
+    title: '¡Has ganado un
+cupón descuento!',
     body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎟'
   },
+  'Try Again': {
+    win: false,
+    eyebrow: 'Try Again',
+    title: '¡Vuelve
+a girar!',
+    body: '¡La ruleta te da otra oportunidad!',
+    note: '',
+    icon: '🔄'
+  },
   'Better Luck Next Time!': {
     win: false,
     eyebrow: 'Sin suerte esta vez',
-    title: 'Mejor\nsuerte',
-    body: 'La ruleta no ha sido generosa hoy. ¡Gracias por participar!',
+    title: 'Mejor suerte
+la próxima',
+    body: '¡Gracias por participar!',
     note: '',
     icon: '😅'
   }

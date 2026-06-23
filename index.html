@@ -13,11 +13,8 @@
     --red: #E2001A;
     --red-dark: #B3191A;
     --black: #1A1A1A;
-    --grey-light: #F0EFED;
     --grey-mid: #C8C7C5;
     --white: #FFFFFF;
-    --sector-red: #E2001A;
-    --sector-grey: #D9D8D6;
   }
 
   html, body {
@@ -53,148 +50,86 @@
   }
 
   /* ── SCREENS ── */
-  .screen {
-    display: none;
-    min-height: 100vh;
-    padding-top: 64px;
-  }
+  .screen { display: none; min-height: 100vh; padding-top: 64px; }
   .screen.active { display: flex; flex-direction: column; }
 
-  /* ── SCREEN 1: FORMULARI ── */
-  #screen-form {
-    position: relative;
-    align-items: center;
-    justify-content: center;
-  }
+  /* ── SCREEN 1: FORM ── */
+  #screen-form { position: relative; align-items: center; justify-content: center; }
 
   .hero-bg {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: url('https://lurbel.eu/uploads/lurbel-spring-summer-26.jpg') center/cover no-repeat;
     z-index: 0;
   }
   .hero-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(226,0,26,0.18) 100%);
     z-index: 1;
   }
-
   .form-container {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 480px;
+    position: relative; z-index: 2;
+    width: 100%; max-width: 480px;
     margin: 40px 16px;
     background: rgba(26,26,26,0.82);
     border: 1px solid rgba(255,255,255,0.1);
     backdrop-filter: blur(16px);
     padding: 40px 36px;
   }
-
   .form-eyebrow {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 12px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px;
   }
-
   .form-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 42px;
-    font-weight: 800;
-    line-height: 1.0;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
+    font-size: 42px; font-weight: 800;
+    line-height: 1.0; text-transform: uppercase;
     margin-bottom: 8px;
   }
   .form-title span { color: var(--red); }
-
-  .form-subtitle {
-    font-size: 14px;
-    color: var(--grey-mid);
-    line-height: 1.5;
-    margin-bottom: 32px;
-  }
+  .form-subtitle { font-size: 14px; color: var(--grey-mid); line-height: 1.5; margin-bottom: 32px; }
 
   .form-row { display: flex; gap: 12px; }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-bottom: 16px;
-  }
+  .form-group { display: flex; flex-direction: column; flex: 1; margin-bottom: 16px; }
 
   label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--grey-mid);
-    margin-bottom: 6px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--grey-mid); margin-bottom: 6px;
   }
-
-  input[type="text"],
-  input[type="email"] {
+  input[type="text"], input[type="email"] {
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.14);
     color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    font-size: 15px;
-    padding: 12px 14px;
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
+    font-family: 'Barlow', sans-serif; font-size: 15px;
+    padding: 12px 14px; outline: none;
+    transition: border-color 0.2s; width: 100%;
   }
   input:focus { border-color: var(--red); }
   input::placeholder { color: rgba(255,255,255,0.25); }
 
   .checkbox-group {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 28px;
-    cursor: pointer;
+    display: flex; align-items: flex-start;
+    gap: 12px; margin-bottom: 28px; cursor: pointer;
   }
   .checkbox-group input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    accent-color: var(--red);
-    cursor: pointer;
-    margin-top: 2px;
+    width: 18px; height: 18px; min-width: 18px;
+    accent-color: var(--red); cursor: pointer; margin-top: 2px;
   }
-  .checkbox-group span {
-    font-size: 12px;
-    color: var(--grey-mid);
-    line-height: 1.5;
-  }
-  .checkbox-group a {
-    color: var(--grey-mid);
-    text-decoration: underline;
-  }
+  .checkbox-group span { font-size: 12px; color: var(--grey-mid); line-height: 1.5; }
+  .checkbox-group a { color: var(--grey-mid); text-decoration: underline; }
 
   .btn-primary {
-    width: 100%;
-    background: var(--red);
-    color: var(--white);
+    width: 100%; background: var(--red); color: var(--white);
     border: none;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 16px 24px;
-    cursor: pointer;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 16px 24px; cursor: pointer;
     transition: background 0.2s, transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
   }
   .btn-primary:hover { background: var(--red-dark); }
   .btn-primary:active { transform: scale(0.99); }
@@ -204,130 +139,110 @@
     display: none;
     background: rgba(226,0,26,0.15);
     border: 1px solid var(--red);
-    color: #ff6b6b;
-    font-size: 13px;
-    padding: 12px 14px;
-    margin-bottom: 16px;
+    color: #ff6b6b; font-size: 13px;
+    padding: 12px 14px; margin-bottom: 16px;
   }
 
-  /* ── SCREEN 2: RULETA ── */
+  /* ── SCREEN 2: WHEEL ── */
   #screen-wheel {
-    align-items: center;
-    justify-content: center;
-    background: var(--black);
-    padding: 80px 16px 40px;
+    align-items: center; justify-content: center;
+    background: var(--black); padding: 40px 16px;
+    min-height: 100vh;
   }
-
   .wheel-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    width: 100%;
-    max-width: 520px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 28px;
+    width: 100%; max-width: 560px;
   }
-
-  .wheel-heading {
-    text-align: center;
-  }
+  .wheel-heading { text-align: center; }
   .wheel-heading .eyebrow {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 8px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 8px;
   }
   .wheel-heading h2 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
+    font-size: 32px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.02em;
   }
 
   .wheel-wrapper {
     position: relative;
-    width: 340px;
-    height: 340px;
+    width: 480px; height: 480px;
   }
-
   #wheel-canvas {
     border-radius: 50%;
-    box-shadow: 0 0 0 6px var(--black), 0 0 0 10px rgba(226,0,26,0.3), 0 24px 60px rgba(0,0,0,0.6);
+    box-shadow: 0 0 0 6px var(--black), 0 0 0 10px rgba(226,0,26,0.35), 0 24px 60px rgba(0,0,0,0.7);
     display: block;
   }
-
   .wheel-pointer {
     position: absolute;
-    top: -16px;
-    left: 50%;
+    top: -18px; left: 50%;
     transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 14px solid transparent;
-    border-right: 14px solid transparent;
-    border-top: 28px solid var(--red);
-    filter: drop-shadow(0 2px 6px rgba(226,0,26,0.7));
+    width: 0; height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 32px solid var(--red);
+    filter: drop-shadow(0 2px 8px rgba(226,0,26,0.8));
     z-index: 10;
   }
-
   .wheel-center-cap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
+    width: 64px; height: 64px;
     background: var(--black);
     border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 3px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
     z-index: 10;
+    box-shadow: 0 0 0 2px rgba(226,0,26,0.3);
   }
-  .wheel-center-cap img { width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1); }
+  .wheel-center-cap svg { width: 36px; height: 36px; }
+
+  /* Try Again toast */
+  .try-again-toast {
+    display: none;
+    background: rgba(226,0,26,0.12);
+    border: 1px solid rgba(226,0,26,0.4);
+    padding: 14px 20px;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+  }
+  .try-again-toast.visible { display: block; }
+  .try-again-toast p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--white);
+  }
+  .try-again-toast span { color: var(--red); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   .btn-spin {
-    background: var(--red);
-    color: var(--white);
+    background: var(--red); color: var(--white);
     border: none;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 18px 56px;
-    cursor: pointer;
+    font-size: 22px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 18px 64px; cursor: pointer;
     transition: background 0.2s, transform 0.1s;
   }
   .btn-spin:hover { background: var(--red-dark); }
   .btn-spin:disabled { background: #444; cursor: not-allowed; opacity: 0.6; }
 
-  /* ── SCREEN 3: RESULTAT ── */
+  /* ── SCREEN 3: RESULT ── */
   #screen-result {
-    align-items: center;
-    justify-content: center;
-    background: var(--black);
-    padding: 80px 16px 40px;
+    align-items: center; justify-content: center;
+    background: var(--black); padding: 80px 16px 40px;
   }
-
-  .result-card {
-    width: 100%;
-    max-width: 460px;
-    text-align: center;
-  }
-
+  .result-card { width: 100%; max-width: 460px; text-align: center; }
   .result-icon {
-    width: 80px;
-    height: 80px;
+    width: 80px; height: 80px;
     margin: 0 auto 24px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 36px;
   }
   .result-icon.win { background: rgba(226,0,26,0.15); border: 2px solid var(--red); }
@@ -335,78 +250,47 @@
 
   .result-eyebrow {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 12px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 12px;
   }
-
   .result-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 44px;
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: 1.0;
-    margin-bottom: 16px;
+    font-size: 44px; font-weight: 800;
+    text-transform: uppercase; line-height: 1.0; margin-bottom: 16px;
   }
-
   .result-body {
-    font-size: 15px;
-    color: var(--grey-mid);
-    line-height: 1.6;
-    margin-bottom: 32px;
-    max-width: 360px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 15px; color: var(--grey-mid); line-height: 1.6;
+    margin-bottom: 32px; max-width: 360px; margin-left: auto; margin-right: auto;
   }
-
   .result-prize-box {
     background: rgba(226,0,26,0.1);
     border: 1px solid rgba(226,0,26,0.3);
-    padding: 20px 24px;
-    margin-bottom: 32px;
+    padding: 20px 24px; margin-bottom: 32px;
   }
   .result-prize-box .prize-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 6px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 6px;
   }
   .result-prize-box .prize-name {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--white);
+    font-size: 28px; font-weight: 800;
+    text-transform: uppercase; color: var(--white);
   }
-
-  .result-note {
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
-    line-height: 1.5;
-  }
+  .result-note { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5; }
 
   /* ── LOADING ── */
   .loading-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,26,26,0.85);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 16px;
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,26,26,0.85); z-index: 200;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
   }
   .loading-overlay.active { display: flex; }
   .spinner {
-    width: 40px;
-    height: 40px;
+    width: 40px; height: 40px;
     border: 3px solid rgba(255,255,255,0.1);
     border-top-color: var(--red);
     border-radius: 50%;
@@ -415,19 +299,18 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-text {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--grey-mid);
+    font-size: 14px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--grey-mid);
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 540px) {
+  @media (max-width: 560px) {
     .form-container { padding: 28px 20px; margin: 24px 12px; }
     .form-title { font-size: 32px; }
     .form-row { flex-direction: column; gap: 0; }
-    .wheel-wrapper { width: 290px; height: 290px; }
-    #wheel-canvas { width: 290px !important; height: 290px !important; }
+    .wheel-wrapper { width: 320px; height: 320px; }
+    #wheel-canvas { width: 320px !important; height: 320px !important; }
+    .wheel-center-cap { width: 44px; height: 44px; }
+    .wheel-center-cap svg { width: 24px; height: 24px; }
   }
 </style>
 </head>
@@ -445,7 +328,7 @@
   <span class="header-tag">Lurbel × Like Sport</span>
 </header>
 
-<!-- SCREEN 1: FORMULARI -->
+<!-- SCREEN 1: FORM -->
 <div class="screen active" id="screen-form">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -459,22 +342,20 @@
     <div class="form-row">
       <div class="form-group">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name" required>
+        <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
       </div>
       <div class="form-group">
         <label for="apellidos">Apellidos</label>
-        <input type="text" id="apellidos" placeholder="Tus apellidos" autocomplete="family-name" required>
+        <input type="text" id="apellidos" placeholder="Tus apellidos" autocomplete="family-name">
       </div>
     </div>
-
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" placeholder="tu@email.com" autocomplete="email" required>
+      <input type="email" id="email" placeholder="tu@email.com" autocomplete="email">
     </div>
-
     <div class="form-group">
       <label for="ciudad">Ciudad</label>
-      <input type="text" id="ciudad" placeholder="Tu ciudad" autocomplete="address-level2" required>
+      <input type="text" id="ciudad" placeholder="Tu ciudad" autocomplete="address-level2">
     </div>
 
     <label class="checkbox-group" for="lopd">
@@ -489,19 +370,29 @@
   </div>
 </div>
 
-<!-- SCREEN 2: RULETA -->
+<!-- SCREEN 2: WHEEL -->
 <div class="screen" id="screen-wheel">
   <div class="wheel-section">
     <div class="wheel-heading">
       <div class="eyebrow">Tu turno</div>
-      <h2>¡Gira y descubre<br>tu premio!</h2>
+      <h2 id="wheel-title">¡Gira y descubre tu premio!</h2>
+    </div>
+
+    <div class="try-again-toast" id="try-again-toast">
+      <p>🔄 ¡<span>Try Again!</span> Vuelve a girar la ruleta</p>
     </div>
 
     <div class="wheel-wrapper">
       <div class="wheel-pointer"></div>
-      <canvas id="wheel-canvas" width="340" height="340"></canvas>
+      <canvas id="wheel-canvas" width="480" height="480"></canvas>
       <div class="wheel-center-cap">
-        <img src="https://lurbel.eu/uploads/logo-lurbel-white.svg" alt="">
+        <!-- Lurbel imagotip SVG inline -->
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 8C27 8 8 27 8 50s19 42 42 42 42-19 42-42S73 8 50 8z" fill="none"/>
+          <!-- Lurbel swoosh symbol based on the imagotip -->
+          <path d="M62 18c-8-4-18-4-26 0C24 24 16 34 16 46c0 8 3 15 8 20 2 2 5 1 5-2V42c0-10 8-18 18-18 4 0 8 1 11 3 5 3 8 9 8 15v6c0 3 3 5 5 3 5-5 8-12 8-19 0-6-2-11-6-15-3-3-7-6-11-7z" fill="white"/>
+          <path d="M29 70c-2-2-5-1-5 2 4 7 11 12 19 13 9 2 18-1 24-7 2-2 1-5-1-6-7-3-13-8-16-15-1-2-4-2-5 0-3 5-8 10-14 13H29z" fill="white" opacity="0.85"/>
+        </svg>
       </div>
     </div>
 
@@ -509,7 +400,7 @@
   </div>
 </div>
 
-<!-- SCREEN 3: RESULTAT -->
+<!-- SCREEN 3: RESULT -->
 <div class="screen" id="screen-result">
   <div class="result-card">
     <div class="result-icon" id="result-icon"></div>
@@ -526,54 +417,49 @@
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHoNoAy4gCGZkd_8_d_lTCKoX7paeUqMXj-vehRtvK1i02EpcjDfQl4lto-XhqGw2mrA/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-// ── SECTORS ─────────────────────────────────────────────────────────────────
+// ── SECTORS (12, alternant roig/gris com el PDF) ─────────────────────────────
 var SECTORS = [
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#E2001A', icon: '😞', id: 'better_luck' },
-  { label: 'Try Again',               weight: 1, color: '#D9D8D6', icon: '🔄', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#E2001A', icon: '😞', id: 'better_luck' },
-  { label: 'Discount\nCoupon',        weight: 1, color: '#D9D8D6', icon: '🎟', id: 'discount'    },
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#E2001A', icon: '😞', id: 'better_luck' },
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#D9D8D6', icon: '😞', id: 'better_luck' },
-  { label: 'Lurbel Pack',             weight: 1, color: '#E2001A', icon: '📦', id: 'lurbel_pack' },
-  { label: 'Try Again',               weight: 1, color: '#D9D8D6', icon: '🔄', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#E2001A', icon: '😞', id: 'better_luck' },
-  { label: 'Gift',                    weight: 1, color: '#D9D8D6', icon: '🎁', id: 'gift'        },
-  { label: 'Better Luck\nNext Time!', weight: 1, color: '#E2001A', icon: '😞', id: 'better_luck' },
-  { label: 'Try Again',               weight: 1, color: '#D9D8D6', icon: '🔄', id: 'try_again'   },
-  { label: 'Discount\nCoupon',        weight: 1, color: '#E2001A', icon: '🎟', id: 'discount'    },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Discount\nCoupon',        color: '#D9D8D6', id: 'discount'    },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Better Luck\nNext Time!', color: '#D9D8D6', id: 'better_luck' },
+  { label: 'Lurbel Pack',             color: '#E2001A', id: 'lurbel_pack' },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Gift',                    color: '#D9D8D6', id: 'gift'        },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
 ];
-// Total sectors: 13 → adjusts to match PDF layout (odd=red, even=grey alternating)
-
-// Weight-based sector list (flatten for random pick)
-var WEIGHTED = [];
-SECTORS.forEach(function(s) { for (var i=0; i<s.weight; i++) WEIGHTED.push(s); });
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-var userData = {};
-var assignedPrize = null;
-var spinAngle = 0;
-var spinning = false;
+var userData       = {};
+var assignedPrize  = null;
+var spinAngle      = 0;
+var spinning       = false;
+var tryAgainCount  = 0;
 
 // ── WHEEL DRAW ───────────────────────────────────────────────────────────────
 var canvas = document.getElementById('wheel-canvas');
-var ctx = canvas.getContext('2d');
-var N = SECTORS.length;
-var ARC = (2 * Math.PI) / N;
+var ctx    = canvas.getContext('2d');
+var N      = SECTORS.length;
+var ARC    = (2 * Math.PI) / N;
 
 function drawWheel(angle) {
   var cx = canvas.width / 2;
   var cy = canvas.height / 2;
-  var r = cx - 4;
+  var r  = cx - 4;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   for (var i = 0; i < N; i++) {
     var start = angle + i * ARC - Math.PI / 2;
-    var end = start + ARC;
-    var s = SECTORS[i];
+    var end   = start + ARC;
+    var s     = SECTORS[i];
 
-    // Sector fill
+    // Fill
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, r, start, end);
@@ -581,12 +467,12 @@ function drawWheel(angle) {
     ctx.fillStyle = s.color;
     ctx.fill();
 
-    // Sector border
+    // Border
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, r, start, end);
     ctx.closePath();
-    ctx.strokeStyle = 'rgba(26,26,26,0.5)';
+    ctx.strokeStyle = 'rgba(26,26,26,0.55)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -596,11 +482,10 @@ function drawWheel(angle) {
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 10px Barlow Condensed, sans-serif';
-
+    ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
     var lines = s.label.split('\n');
-    var lineH = 12;
-    var textR = r - 12;
+    var lineH = 13;
+    var textR = r - 14;
     lines.forEach(function(line, li) {
       var yOff = (li - (lines.length - 1) / 2) * lineH;
       ctx.fillText(line.toUpperCase(), textR, yOff + 4);
@@ -611,77 +496,97 @@ function drawWheel(angle) {
   // Outer ring
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
   ctx.lineWidth = 3;
   ctx.stroke();
 }
 
 drawWheel(0);
 
-// ── SPIN LOGIC ───────────────────────────────────────────────────────────────
-function getWinnerIndex(finalAngle) {
-  // Pointer is at top (−π/2). Find which sector is there.
-  var normalized = (((-finalAngle % (2*Math.PI)) + (2*Math.PI)) % (2*Math.PI));
-  var idx = Math.floor(normalized / ARC) % N;
-  return idx;
+// ── SPIN ─────────────────────────────────────────────────────────────────────
+function findSectorForPrize(prize) {
+  var prizeMap = {
+    'Lurbel Pack':           'lurbel_pack',
+    'Gift':                  'gift',
+    'Discount Coupon':       'discount',
+    'Try Again':             'try_again',
+    'Better Luck Next Time!':'better_luck'
+  };
+  var targetId   = prizeMap[prize] || 'better_luck';
+  var candidates = [];
+  SECTORS.forEach(function(s, i) { if (s.id === targetId) candidates.push(i); });
+  if (!candidates.length) return 0;
+  return candidates[Math.floor(Math.random() * candidates.length)];
 }
 
 function spinWheel() {
   if (spinning) return;
   spinning = true;
   document.getElementById('btn-spin').disabled = true;
+  document.getElementById('try-again-toast').classList.remove('visible');
 
-  // Determine winner based on server-assigned prize
-  var targetIdx = findSectorForPrize(assignedPrize);
+  var targetIdx     = findSectorForPrize(assignedPrize);
+  var extraRot      = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
+  var targetAngle   = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
+  var finalAngle    = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAngle;
+  var duration      = 4500;
+  var start         = null;
+  var startAngle    = spinAngle;
 
-  // Spin: minimum 5 full rotations + land on target sector
-  var extraRotations = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
-  // Center of the target sector should align with pointer
-  var targetAngle = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
-  var finalAngle = spinAngle - (spinAngle % (2 * Math.PI)) + extraRotations + targetAngle;
-
-  var duration = 4500;
-  var start = null;
-  var startAngle = spinAngle;
-
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 4);
-  }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
 
   function animate(ts) {
     if (!start) start = ts;
-    var elapsed = ts - start;
-    var progress = Math.min(elapsed / duration, 1);
-    var current = startAngle + (finalAngle - startAngle) * easeOut(progress);
-    spinAngle = current;
-    drawWheel(current);
-
+    var progress = Math.min((ts - start) / duration, 1);
+    spinAngle = startAngle + (finalAngle - startAngle) * easeOut(progress);
+    drawWheel(spinAngle);
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {
       spinning = false;
-      showResult();
+      onSpinEnd();
     }
   }
-
   requestAnimationFrame(animate);
 }
 
-function findSectorForPrize(prize) {
-  // Map server prize to a sector index
-  var prizeMap = {
-    'Lurbel Pack': 'lurbel_pack',
-    'Gift': 'gift',
-    'Discount Coupon': 'discount',
-    'Try Again': 'try_again',
-    'Better Luck Next Time!': 'better_luck'
-  };
-  var targetId = prizeMap[prize] || 'better_luck';
-  // Find indices that match
-  var candidates = [];
-  SECTORS.forEach(function(s, i) { if (s.id === targetId) candidates.push(i); });
-  if (candidates.length === 0) return 0;
-  return candidates[Math.floor(Math.random() * candidates.length)];
+function onSpinEnd() {
+  if (assignedPrize === 'Try Again') {
+    // Show toast, fetch a new prize, re-enable spin
+    tryAgainCount++;
+    document.getElementById('try-again-toast').classList.add('visible');
+    document.getElementById('btn-spin').disabled = true;
+
+    // Ask server for a new prize (same user, re-spin)
+    var loadEl = document.getElementById('loading');
+    loadEl.querySelector('.loading-text').textContent = 'Preparando nueva tirada…';
+    loadEl.classList.add('active');
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action:    'respin',
+        email:     userData.email,
+        nombre:    userData.nombre,
+        apellidos: userData.apellidos,
+        ciudad:    userData.ciudad
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      loadEl.classList.remove('active');
+      assignedPrize = data.prize;
+      document.getElementById('btn-spin').disabled = false;
+    })
+    .catch(function() {
+      loadEl.classList.remove('active');
+      // Fallback: pick locally (no Try Again to avoid infinite)
+      assignedPrize = 'Better Luck Next Time!';
+      document.getElementById('btn-spin').disabled = false;
+    });
+  } else {
+    showResult();
+  }
 }
 
 // ── RESULT ───────────────────────────────────────────────────────────────────
@@ -689,59 +594,51 @@ var PRIZE_INFO = {
   'Lurbel Pack': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado el\nLurbel Pack!',
+    title: '¡Has ganado\nel Lurbel Pack!',
     body: 'El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega de tu premio.',
-    note: 'Recibirás un email de confirmación en breve.',
+    note: 'Muestra esta pantalla en tienda.',
     icon: '🎉'
   },
   'Gift': {
     win: true,
-    eyebrow: '¡Tienes un regalo!',
-    title: 'Sorpresa\npara ti',
-    body: 'Pasa por el mostrador de Like Sport y recoge tu regalo Lurbel.',
+    eyebrow: '¡Enhorabuena!',
+    title: '¡Has ganado\nun regalo!',
+    body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎁'
   },
   'Discount Coupon': {
     win: true,
-    eyebrow: '¡Descuento conseguido!',
-    title: 'Tu cupón\ndescuento',
+    eyebrow: '¡Enhorabuena!',
+    title: '¡Has ganado\nun cupón descuento!',
     body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
-    note: 'Válido en tienda física. Muestra esta pantalla al equipo de Like Sport.',
+    note: 'Muestra esta pantalla en tienda.',
     icon: '🎟'
-  },
-  'Try Again': {
-    win: false,
-    eyebrow: 'Casi…',
-    title: 'Inténtalo\notra vez',
-    body: 'No ha sido esta vez, pero puedes volver a intentarlo mañana con una nueva participación.',
-    note: 'Cada email puede participar una vez al día.',
-    icon: '🔄'
   },
   'Better Luck Next Time!': {
     win: false,
     eyebrow: 'Sin suerte esta vez',
     title: 'Mejor\nsuerte',
-    body: 'La ruleta no ha sido generosa hoy, pero los premios siguen ahí. ¡Vuelve a intentarlo mañana!',
-    note: 'Cada email puede participar una vez al día.',
+    body: 'La ruleta no ha sido generosa hoy. ¡Gracias por participar!',
+    note: '',
     icon: '😅'
   }
 };
 
 function showResult() {
-  var info = PRIZE_INFO[assignedPrize] || PRIZE_INFO['Better Luck Next Time!'];
-  var isWin = info.win;
+  var info   = PRIZE_INFO[assignedPrize] || PRIZE_INFO['Better Luck Next Time!'];
+  var isWin  = info.win;
 
-  document.getElementById('result-icon').innerHTML = info.icon;
-  document.getElementById('result-icon').className = 'result-icon ' + (isWin ? 'win' : 'loss');
+  document.getElementById('result-icon').innerHTML  = info.icon;
+  document.getElementById('result-icon').className  = 'result-icon ' + (isWin ? 'win' : 'loss');
   document.getElementById('result-eyebrow').textContent = info.eyebrow;
   document.getElementById('result-title').innerHTML = info.title.replace('\n', '<br>');
-  document.getElementById('result-body').textContent = info.body;
-  document.getElementById('result-note').textContent = info.note;
+  document.getElementById('result-body').textContent   = info.body;
+  document.getElementById('result-note').textContent   = info.note;
 
   if (isWin) {
     document.getElementById('result-prize-box').style.display = 'block';
-    document.getElementById('result-prize-name').textContent = assignedPrize;
+    document.getElementById('result-prize-name').textContent  = assignedPrize;
   } else {
     document.getElementById('result-prize-box').style.display = 'none';
   }
@@ -756,48 +653,50 @@ function submitForm() {
   var email     = document.getElementById('email').value.trim();
   var ciudad    = document.getElementById('ciudad').value.trim();
   var lopd      = document.getElementById('lopd').checked;
-  var errorEl   = document.getElementById('error-msg');
 
-  errorEl.style.display = 'none';
+  document.getElementById('error-msg').style.display = 'none';
 
   if (!nombre || !apellidos || !email || !ciudad) {
-    showError('Por favor, rellena todos los campos.');
-    return;
+    showError('Por favor, rellena todos los campos.'); return;
   }
   if (!isValidEmail(email)) {
-    showError('Introduce un email válido.');
-    return;
+    showError('Introduce un email válido.'); return;
   }
   if (!lopd) {
-    showError('Debes aceptar la política de privacidad para participar.');
-    return;
+    showError('Debes aceptar la política de privacidad para participar.'); return;
   }
 
   userData = { nombre: nombre, apellidos: apellidos, email: email, ciudad: ciudad };
 
-  document.getElementById('btn-form').disabled = true;
-  document.getElementById('loading').classList.add('active');
-  document.getElementById('loading').querySelector('.loading-text').textContent = 'Comprobando participación…';
+  var btnEl  = document.getElementById('btn-form');
+  var loadEl = document.getElementById('loading');
+  btnEl.disabled = true;
+  loadEl.querySelector('.loading-text').textContent = 'Comprobando participación…';
+  loadEl.classList.add('active');
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    body: JSON.stringify({ action: 'check', email: email })
+    body: JSON.stringify({
+      action:    'check',
+      email:     email,
+      nombre:    nombre,
+      apellidos: apellidos,
+      ciudad:    ciudad
+    })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    document.getElementById('loading').classList.remove('active');
-    document.getElementById('btn-form').disabled = false;
-
+    loadEl.classList.remove('active');
+    btnEl.disabled = false;
     if (data.alreadyPlayed) {
-      showError('Ya has participado anteriormente. Cada email puede participar una vez.');
-      return;
+      showError('Ya has participado anteriormente con este email.'); return;
     }
     assignedPrize = data.prize;
     showScreen('screen-wheel');
   })
   .catch(function(err) {
-    document.getElementById('loading').classList.remove('active');
-    document.getElementById('btn-form').disabled = false;
+    loadEl.classList.remove('active');
+    btnEl.disabled = false;
     showError('Error de conexión. Por favor, inténtalo de nuevo.');
     console.error(err);
   });
@@ -809,17 +708,16 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
-
 function showError(msg) {
   var el = document.getElementById('error-msg');
   el.textContent = msg;
   el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-
 function isValidEmail(e) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 }
 </script>
 </body>
 </html>
+

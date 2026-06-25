@@ -417,7 +417,7 @@
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQ03KgdUdcqSYkC0i1npQN-lQwcRwa7Krg_ZzwacFJJhjR1McoMmdnKT8IH6kRemA3dQ/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
 // ── SECTORS — 11 caselles: 4 BL + 4 TA + 1 DC + 1 G + 1 LP ─────────────────
 var SECTORS = [
@@ -593,8 +593,7 @@ var PRIZE_INFO = {
   'Lurbel Pack': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado
-el Lurbel Pack!',
+    title: '¡Has ganado\nel Lurbel Pack!',
     body: '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎉'
@@ -602,8 +601,7 @@ el Lurbel Pack!',
   'Gift': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado
-un regalo sorpresa!',
+    title: '¡Has ganado\nun regalo sorpresa!',
     body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎁'
@@ -611,8 +609,7 @@ un regalo sorpresa!',
   'Discount Coupon': {
     win: true,
     eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado un
-cupón descuento!',
+    title: '¡Has ganado un\ncupón descuento!',
     body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
     note: 'Muestra esta pantalla en tienda.',
     icon: '🎟'
@@ -620,8 +617,7 @@ cupón descuento!',
   'Try Again': {
     win: false,
     eyebrow: 'Try Again',
-    title: '¡Vuelve
-a girar!',
+    title: '¡Vuelve\na girar!',
     body: '¡La ruleta te da otra oportunidad!',
     note: '',
     icon: '🔄'
@@ -629,8 +625,7 @@ a girar!',
   'Better Luck Next Time!': {
     win: false,
     eyebrow: 'Sin suerte esta vez',
-    title: 'Mejor suerte
-la próxima',
+    title: 'Mejor suerte\nla próxima',
     body: '¡Gracias por participar!',
     note: '',
     icon: '😅'
@@ -686,8 +681,12 @@ function submitForm() {
   loadEl.querySelector('.loading-text').textContent = 'Comprobando participación…';
   loadEl.classList.add('active');
 
+  var controller = new AbortController();
+  var timeout = setTimeout(function() { controller.abort(); }, 10000);
+
   fetch(SCRIPT_URL, {
     method: 'POST',
+    signal: controller.signal,
     body: JSON.stringify({
       action:    'check',
       email:     email,
@@ -698,23 +697,39 @@ function submitForm() {
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
+    clearTimeout(timeout);
     loadEl.classList.remove('active');
     btnEl.disabled = false;
     if (data.alreadyPlayed) {
       showError('Ya has participado anteriormente con este email.'); return;
     }
-    assignedPrize = data.prize;
+    assignedPrize = data.prize || pickLocalPrize();
     showScreen('screen-wheel');
   })
   .catch(function(err) {
+    clearTimeout(timeout);
     loadEl.classList.remove('active');
     btnEl.disabled = false;
-    showError('Error de conexión. Por favor, inténtalo de nuevo.');
-    console.error(err);
+    // Si falla la connexió, assignem premi localment i continuem
+    console.warn('Server error, using local prize:', err);
+    assignedPrize = pickLocalPrize();
+    showScreen('screen-wheel');
   });
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+
+function pickLocalPrize() {
+  var pool = [
+    'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
+    'Try Again','Try Again','Try Again','Try Again',
+    'Discount Coupon',
+    'Gift',
+    'Lurbel Pack'
+  ];
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');

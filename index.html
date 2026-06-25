@@ -416,32 +416,90 @@
 </div>
 
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────────────────
+// ── CONFIG ───────────────────────────────────────────────────────────────────
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-// ── SECTORS — 11 caselles: 4 BL + 4 TA + 1 DC + 1 G + 1 LP ─────────────────
+// ── PREMIS VÀLIDS ────────────────────────────────────────────────────────────
+var PRIZES_WIN    = ['Lurbel Pack', 'Gift', 'Discount Coupon'];
+var PRIZES_NOWIN  = ['Better Luck Next Time!'];
+var PRIZE_TRY     = 'Try Again';
+
+// ── SECTORS — 11 caselles ────────────────────────────────────────────────────
 var SECTORS = [
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
   { label: 'Discount\nCoupon',        color: '#D9D8D6', id: 'discount'    },
-  { label: 'Lurbel Pack',              color: '#E2001A', id: 'lurbel_pack' },
-  { label: 'Try Again',                color: '#D9D8D6', id: 'try_again'   },
+  { label: 'Lurbel Pack',             color: '#E2001A', id: 'lurbel_pack' },
+  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Gift',                     color: '#D9D8D6', id: 'gift'        },
-  { label: 'Try Again',                color: '#E2001A', id: 'try_again'   },
+  { label: 'Gift',                    color: '#D9D8D6', id: 'gift'        },
+  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
 ];
 
-// ── STATE ────────────────────────────────────────────────────────────────────
-var userData       = {};
-var assignedPrize  = null;
-var spinAngle      = 0;
-var spinning       = false;
-var tryAgainCount  = 0;
+// Mapa de premi → id de sector
+var PRIZE_TO_SECTOR = {
+  'Lurbel Pack':           'lurbel_pack',
+  'Gift':                  'gift',
+  'Discount Coupon':       'discount',
+  'Try Again':             'try_again',
+  'Better Luck Next Time!':'better_luck'
+};
 
-// ── WHEEL DRAW ───────────────────────────────────────────────────────────────
+// Pool local (mateix pes que el servidor)
+var LOCAL_POOL = [
+  'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!',
+  'Try Again', 'Try Again', 'Try Again', 'Try Again',
+  'Discount Coupon',
+  'Gift',
+  'Lurbel Pack'
+];
+
+// ── MISSATGES DE RESULTAT ────────────────────────────────────────────────────
+var PRIZE_INFO = {
+  'Lurbel Pack': {
+    win: true,
+    eyebrow: '¡Enhorabuena!',
+    title: '¡Has ganado el<br>Lurbel Pack!',
+    body: '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
+    note: 'Muestra esta pantalla en tienda.',
+    icon: '🎉'
+  },
+  'Gift': {
+    win: true,
+    eyebrow: '¡Enhorabuena!',
+    title: '¡Has ganado un<br>regalo sorpresa!',
+    body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
+    note: 'Muestra esta pantalla en tienda.',
+    icon: '🎁'
+  },
+  'Discount Coupon': {
+    win: true,
+    eyebrow: '¡Enhorabuena!',
+    title: '¡Has ganado un<br>cupón descuento!',
+    body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
+    note: 'Muestra esta pantalla en tienda.',
+    icon: '🎟'
+  },
+  'Better Luck Next Time!': {
+    win: false,
+    eyebrow: 'Sin suerte esta vez',
+    title: 'Mejor suerte<br>la próxima',
+    body: '¡Gracias por participar!',
+    note: '',
+    icon: '😅'
+  }
+};
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+var userData      = {};
+var assignedPrize = null;
+var spinAngle     = 0;
+var spinning      = false;
+
+// ── CANVAS ───────────────────────────────────────────────────────────────────
 var canvas = document.getElementById('wheel-canvas');
 var ctx    = canvas.getContext('2d');
 var N      = SECTORS.length;
@@ -452,30 +510,14 @@ function drawWheel(angle) {
   var cy = canvas.height / 2;
   var r  = cx - 4;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   for (var i = 0; i < N; i++) {
+    var s     = SECTORS[i];
     var start = angle + i * ARC - Math.PI / 2;
     var end   = start + ARC;
-    var s     = SECTORS[i];
-
-    // Fill
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, start, end);
-    ctx.closePath();
-    ctx.fillStyle = s.color;
-    ctx.fill();
-
-    // Border
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, start, end);
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(26,26,26,0.55)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Text
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
+    ctx.fillStyle = s.color; ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
+    ctx.strokeStyle = 'rgba(26,26,26,0.55)'; ctx.lineWidth = 2; ctx.stroke();
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + ARC / 2);
@@ -484,176 +526,117 @@ function drawWheel(angle) {
     ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
     var lines = s.label.split('\n');
     var lineH = 13;
-    var textR = r - 14;
     lines.forEach(function(line, li) {
-      var yOff = (li - (lines.length - 1) / 2) * lineH;
-      ctx.fillText(line.toUpperCase(), textR, yOff + 4);
+      ctx.fillText(line.toUpperCase(), r - 14, (li - (lines.length - 1) / 2) * lineH + 4);
     });
     ctx.restore();
   }
-
-  // Outer ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 3; ctx.stroke();
 }
-
 drawWheel(0);
 
 // ── SPIN ─────────────────────────────────────────────────────────────────────
-function findSectorForPrize(prize) {
-  var prizeMap = {
-    'Lurbel Pack':           'lurbel_pack',
-    'Gift':                  'gift',
-    'Discount Coupon':       'discount',
-    'Try Again':             'try_again',
-    'Better Luck Next Time!':'better_luck'
-  };
-  var targetId   = prizeMap[prize] || 'better_luck';
-  var candidates = [];
-  SECTORS.forEach(function(s, i) { if (s.id === targetId) candidates.push(i); });
-  if (!candidates.length) return 0;
-  return candidates[Math.floor(Math.random() * candidates.length)];
-}
-
-function spinWheel() {
+function doSpin(onEnd) {
   if (spinning) return;
   spinning = true;
   document.getElementById('btn-spin').disabled = true;
-  document.getElementById('try-again-toast').classList.remove('visible');
 
-  var targetIdx     = findSectorForPrize(assignedPrize);
-  var extraRot      = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
-  var targetAngle   = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
-  var finalAngle    = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAngle;
-  var duration      = 4500;
-  var start         = null;
-  var startAngle    = spinAngle;
+  var targetId   = PRIZE_TO_SECTOR[assignedPrize] || 'better_luck';
+  var candidates = [];
+  SECTORS.forEach(function(s, i) { if (s.id === targetId) candidates.push(i); });
+  var targetIdx  = candidates[Math.floor(Math.random() * candidates.length)];
+
+  var extraRot   = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
+  var targetAng  = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
+  var finalAngle = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAng;
+  var startAngle = spinAngle;
+  var startTs    = null;
+  var duration   = 4500;
 
   function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
-
   function animate(ts) {
-    if (!start) start = ts;
-    var progress = Math.min((ts - start) / duration, 1);
-    spinAngle = startAngle + (finalAngle - startAngle) * easeOut(progress);
+    if (!startTs) startTs = ts;
+    var p = Math.min((ts - startTs) / duration, 1);
+    spinAngle = startAngle + (finalAngle - startAngle) * easeOut(p);
     drawWheel(spinAngle);
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      spinning = false;
-      onSpinEnd();
-    }
+    if (p < 1) { requestAnimationFrame(animate); } else { spinning = false; onEnd(); }
   }
   requestAnimationFrame(animate);
 }
 
-function onSpinEnd() {
-  if (assignedPrize === 'Try Again') {
-    // Show toast, fetch a new prize, re-enable spin
-    tryAgainCount++;
-    document.getElementById('try-again-toast').classList.add('visible');
-    document.getElementById('btn-spin').disabled = true;
-
-    // Ask server for a new prize (same user, re-spin)
-    var loadEl = document.getElementById('loading');
-    loadEl.querySelector('.loading-text').textContent = 'Preparando nueva tirada…';
-    loadEl.classList.add('active');
-
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        action:    'respin',
-        email:     userData.email,
-        nombre:    userData.nombre,
-        apellidos: userData.apellidos,
-        ciudad:    userData.ciudad
-      })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      loadEl.classList.remove('active');
-      assignedPrize = data.prize;
-      document.getElementById('btn-spin').disabled = false;
-    })
-    .catch(function() {
-      loadEl.classList.remove('active');
-      // Fallback: pick locally (no Try Again to avoid infinite)
-      assignedPrize = 'Better Luck Next Time!';
-      document.getElementById('btn-spin').disabled = false;
-    });
-  } else {
-    showResult();
-  }
+function spinWheel() {
+  document.getElementById('try-again-toast').classList.remove('visible');
+  doSpin(function() {
+    if (assignedPrize === PRIZE_TRY) {
+      // Try Again: mostra toast, demana nou premi, torna a girar
+      document.getElementById('try-again-toast').classList.add('visible');
+      fetchRespin();
+    } else {
+      showResult();
+    }
+  });
 }
 
-// ── RESULT ───────────────────────────────────────────────────────────────────
-var PRIZE_INFO = {
-  'Lurbel Pack': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado\nel Lurbel Pack!',
-    body: '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎉'
-  },
-  'Gift': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado\nun regalo sorpresa!',
-    body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎁'
-  },
-  'Discount Coupon': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado un\ncupón descuento!',
-    body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎟'
-  },
-  'Try Again': {
-    win: false,
-    eyebrow: 'Try Again',
-    title: '¡Vuelve\na girar!',
-    body: '¡La ruleta te da otra oportunidad!',
-    note: '',
-    icon: '🔄'
-  },
-  'Better Luck Next Time!': {
-    win: false,
-    eyebrow: 'Sin suerte esta vez',
-    title: 'Mejor suerte\nla próxima',
-    body: '¡Gracias por participar!',
-    note: '',
-    icon: '😅'
-  }
-};
+function fetchRespin() {
+  var loadEl = document.getElementById('loading');
+  loadEl.querySelector('.loading-text').textContent = 'Preparando nueva tirada…';
+  loadEl.classList.add('active');
 
+  var done = false;
+  var timeout = setTimeout(function() {
+    if (done) return;
+    done = true;
+    loadEl.classList.remove('active');
+    assignedPrize = pickLocalPrize(true); // no Try Again en fallback
+    document.getElementById('btn-spin').disabled = false;
+  }, 8000);
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'respin', email: userData.email })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (done) return; done = true;
+    clearTimeout(timeout);
+    loadEl.classList.remove('active');
+    assignedPrize = data.prize || pickLocalPrize(true);
+    document.getElementById('btn-spin').disabled = false;
+  })
+  .catch(function() {
+    if (done) return; done = true;
+    clearTimeout(timeout);
+    loadEl.classList.remove('active');
+    assignedPrize = pickLocalPrize(true);
+    document.getElementById('btn-spin').disabled = false;
+  });
+}
+
+// ── RESULTAT ─────────────────────────────────────────────────────────────────
 function showResult() {
-  var info   = PRIZE_INFO[assignedPrize] || PRIZE_INFO['Better Luck Next Time!'];
-  var isWin  = info.win;
-
-  document.getElementById('result-icon').innerHTML  = info.icon;
-  document.getElementById('result-icon').className  = 'result-icon ' + (isWin ? 'win' : 'loss');
+  var info = PRIZE_INFO[assignedPrize];
+  if (!info) {
+    // Premi desconegut → tractem com Better Luck
+    assignedPrize = 'Better Luck Next Time!';
+    info = PRIZE_INFO[assignedPrize];
+  }
+  document.getElementById('result-icon').innerHTML      = info.icon;
+  document.getElementById('result-icon').className      = 'result-icon ' + (info.win ? 'win' : 'loss');
   document.getElementById('result-eyebrow').textContent = info.eyebrow;
-  document.getElementById('result-title').innerHTML = info.title.replace('\n', '<br>');
-  document.getElementById('result-body').textContent   = info.body;
-  document.getElementById('result-note').textContent   = info.note;
-
-  if (isWin) {
+  document.getElementById('result-title').innerHTML     = info.title;
+  document.getElementById('result-body').textContent    = info.body;
+  document.getElementById('result-note').textContent    = info.note;
+  if (info.win) {
     document.getElementById('result-prize-box').style.display = 'block';
     document.getElementById('result-prize-name').textContent  = assignedPrize;
   } else {
     document.getElementById('result-prize-box').style.display = 'none';
   }
-
   showScreen('screen-result');
 }
 
-// ── FORM SUBMIT ──────────────────────────────────────────────────────────────
+// ── FORMULARI ────────────────────────────────────────────────────────────────
 function submitForm() {
   var nombre    = document.getElementById('nombre').value.trim();
   var apellidos = document.getElementById('apellidos').value.trim();
@@ -663,15 +646,9 @@ function submitForm() {
 
   document.getElementById('error-msg').style.display = 'none';
 
-  if (!nombre || !apellidos || !email || !ciudad) {
-    showError('Por favor, rellena todos los campos.'); return;
-  }
-  if (!isValidEmail(email)) {
-    showError('Introduce un email válido.'); return;
-  }
-  if (!lopd) {
-    showError('Debes aceptar la política de privacidad para participar.'); return;
-  }
+  if (!nombre || !apellidos || !email || !ciudad) { showError('Por favor, rellena todos los campos.'); return; }
+  if (!isValidEmail(email))                        { showError('Introduce un email válido.'); return; }
+  if (!lopd)                                       { showError('Debes aceptar la política de privacidad para participar.'); return; }
 
   userData = { nombre: nombre, apellidos: apellidos, email: email, ciudad: ciudad };
 
@@ -681,55 +658,42 @@ function submitForm() {
   loadEl.querySelector('.loading-text').textContent = 'Comprobando participación…';
   loadEl.classList.add('active');
 
-  var controller = new AbortController();
-  var timeout = setTimeout(function() { controller.abort(); }, 10000);
+  var done    = false;
+  var timeout = setTimeout(function() {
+    if (done) return; done = true;
+    loadEl.classList.remove('active'); btnEl.disabled = false;
+    assignedPrize = pickLocalPrize(false);
+    showScreen('screen-wheel');
+  }, 10000);
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    signal: controller.signal,
-    body: JSON.stringify({
-      action:    'check',
-      email:     email,
-      nombre:    nombre,
-      apellidos: apellidos,
-      ciudad:    ciudad
-    })
+    body: JSON.stringify({ action: 'check', email: email, nombre: nombre, apellidos: apellidos, ciudad: ciudad })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
+    if (done) return; done = true;
     clearTimeout(timeout);
-    loadEl.classList.remove('active');
-    btnEl.disabled = false;
-    if (data.alreadyPlayed) {
-      showError('Ya has participado anteriormente con este email.'); return;
-    }
-    assignedPrize = data.prize || pickLocalPrize();
+    loadEl.classList.remove('active'); btnEl.disabled = false;
+    if (data.alreadyPlayed) { showError('Ya has participado anteriormente con este email.'); return; }
+    assignedPrize = data.prize || pickLocalPrize(false);
     showScreen('screen-wheel');
   })
   .catch(function(err) {
+    if (done) return; done = true;
     clearTimeout(timeout);
-    loadEl.classList.remove('active');
-    btnEl.disabled = false;
-    // Si falla la connexió, assignem premi localment i continuem
-    console.warn('Server error, using local prize:', err);
-    assignedPrize = pickLocalPrize();
+    loadEl.classList.remove('active'); btnEl.disabled = false;
+    console.warn('Server error, local prize:', err);
+    assignedPrize = pickLocalPrize(false);
     showScreen('screen-wheel');
   });
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
-
-function pickLocalPrize() {
-  var pool = [
-    'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
-    'Try Again','Try Again','Try Again','Try Again',
-    'Discount Coupon',
-    'Gift',
-    'Lurbel Pack'
-  ];
+function pickLocalPrize(noTryAgain) {
+  var pool = LOCAL_POOL.filter(function(p) { return noTryAgain ? p !== PRIZE_TRY : true; });
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
@@ -737,14 +701,11 @@ function showScreen(id) {
 }
 function showError(msg) {
   var el = document.getElementById('error-msg');
-  el.textContent = msg;
-  el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
-function isValidEmail(e) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-}
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
 </script>
 </body>
 </html>
-

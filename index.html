@@ -58,8 +58,7 @@ header img{height:24px}
 .wwrap{position:relative;width:460px;height:460px}
 #wcanvas{border-radius:50%;box-shadow:0 0 0 5px var(--black),0 0 0 9px rgba(226,0,26,.35),0 20px 50px rgba(0,0,0,.7);display:block}
 .wptr{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:30px solid var(--red);filter:drop-shadow(0 2px 6px rgba(226,0,26,.8));z-index:10}
-.wcap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;background:var(--black);border-radius:50%;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 0 0 2px rgba(226,0,26,.25)}
-.wcap svg{width:32px;height:32px}
+.wcap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:var(--black);border-radius:50%;border:3px solid rgba(255,255,255,.18);z-index:10;box-shadow:0 0 0 2px rgba(226,0,26,.25)}
 .btnspin{background:var(--red);color:var(--white);border:none;font-family:'Futura Std',Arial,sans-serif;font-size:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:17px 60px;cursor:pointer;transition:background .2s}
 .btnspin:hover{background:var(--reddark)}
 .btnspin:disabled{background:#444;cursor:not-allowed;opacity:.6}
@@ -91,8 +90,7 @@ header img{height:24px}
   .frow{flex-direction:column;gap:0}
   .wwrap{width:310px;height:310px}
   #wcanvas{width:310px!important;height:310px!important}
-  .wcap{width:42px;height:42px}
-  .wcap svg{width:22px;height:22px}
+  .wcap{width:40px;height:40px}
 }
 </style>
 </head>
@@ -147,13 +145,7 @@ header img{height:24px}
     <div class="wwrap">
       <div class="wptr"></div>
       <canvas id="wcanvas" width="460" height="460"></canvas>
-      <div class="wcap">
-        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="47" cy="64" rx="28" ry="30" fill="none" stroke="white" stroke-width="9"/>
-          <path d="M47 34 C47 34 62 20 80 28 C95 35 100 52 95 66 C91 77 82 84 82 84" fill="none" stroke="white" stroke-width="9" stroke-linecap="round"/>
-          <path d="M75 78 C75 78 90 70 98 55" fill="none" stroke="white" stroke-width="9" stroke-linecap="round"/>
-        </svg>
-      </div>
+      <div class="wcap" aria-hidden="true"></div>
     </div>
     <button class="btnspin" id="btn-spin" onclick="spinWheel()">¡Girar!</button>
   </div>
@@ -178,7 +170,7 @@ header img{height:24px}
 /* ═══════════════════════════════════════════════════════
    CONFIGURACIÓN
 ═══════════════════════════════════════════════════════ */
-var GAS_URL = 'https://script.google.com/macros/s/AKfycbww2yYT78BVu-xcPj_h-mvZlihD8o252AQVY8f1q1_6IHlgVpiULFpCUVb0xaMqrsYfXw/exec';
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbznT0e67yG5W3-CVpEVh38vgk5XOK-ObChEhKYRgTMELwfWIRA-yH-85SXwbBDG1ZbYsw/exec';
 
 /* Premios — deben coincidir exactamente con Code.gs */
 var P_LURBEL   = 'Lurbel Pack';
@@ -189,27 +181,31 @@ var P_TRY      = 'Try Again';
 
 /* ═══════════════════════════════════════════════════════
    SECTORES — 12 casillas, en orden horario desde arriba.
-   Esta distribución replica la captura adjunta:
-   5× Better Luck + 4× Try Again + 1× Discount + 1× Gift + 1× Lurbel Pack
+   Diseño visual sin iconos.
+   Nota: las probabilidades reales las decide Google Apps Script.
 ═══════════════════════════════════════════════════════ */
 var RED  = '#E2001A';
 var GREY = '#E9E9E9';
 var SECTORS = [
-  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
-  {t:P_DISCOUNT, c:GREY, label:'Discount\nCoupon',        icon:'coupon'},
-  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
-  {t:P_TRY,      c:GREY, label:'Try Again',               icon:'retry'},
-  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
-  {t:P_GIFT,     c:GREY, label:'Gift',                    icon:'gift'},
-  {t:P_TRY,      c:RED,  label:'Try Again',               icon:'retry'},
-  {t:P_BETTER,   c:GREY, label:'Better Luck\nNext Time!', icon:'sad'},
-  {t:P_TRY,      c:RED,  label:'Try Again',               icon:'retry'},
-  {t:P_LURBEL,   c:GREY, label:'Lurbel Pack',             icon:'pack'},
-  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
-  {t:P_TRY,      c:GREY, label:'Try Again',               icon:'retry'}
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!'},
+  {t:P_DISCOUNT, c:GREY, label:'Discount\nCoupon'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!'},
+  {t:P_TRY,      c:GREY, label:'Try Again'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!'},
+  {t:P_GIFT,     c:GREY, label:'Gift'},
+  {t:P_TRY,      c:RED,  label:'Try Again'},
+  {t:P_BETTER,   c:GREY, label:'Better Luck\nNext Time!'},
+  {t:P_TRY,      c:RED,  label:'Try Again'},
+  {t:P_LURBEL,   c:GREY, label:'Lurbel Pack'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!'},
+  {t:P_TRY,      c:GREY, label:'Try Again'}
 ];
 
 var KNOWN_PRIZES = [P_LURBEL, P_GIFT, P_DISCOUNT, P_BETTER, P_TRY];
+
+/* Probabilidades reales en el servidor actualizado:
+   Better Luck 30% · Try Again 24% · Discount Coupon 24% · Gift 14% · Lurbel Pack 8%
+   Si se agota el límite diario de Lurbel Pack, su peso se excluye automáticamente. */
 
 /* ═══════════════════════════════════════════════════════
    PANTALLA DE RESULTADO
@@ -264,20 +260,18 @@ function drawWheel(a) {
     ctx.lineWidth = 1.2;
     ctx.stroke();
 
-    // icono y texto rotados con el sector
+    // texto rotado con el sector, sin iconos
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(mid);
 
-    drawSectorIcon(s.icon, r * 0.49, 0, ink);
-
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = ink;
-    ctx.font = '700 13px "Futura Std", Arial, sans-serif';
+    ctx.font = '700 15px "Futura Std", Arial, sans-serif';
     var lines = s.label.split('\n');
-    var lh = 13;
-    var tx = r * 0.76;
+    var lh = 15;
+    var tx = r * 0.64;
     for (var l = 0; l < lines.length; l++) {
       var ty = -((lines.length - 1) * lh) / 2 + l * lh;
       ctx.fillText(lines[l].toUpperCase(), tx, ty);
@@ -289,100 +283,6 @@ function drawWheel(a) {
   ctx.arc(cx, cy, r, 0, 2 * Math.PI);
   ctx.strokeStyle = '#F6F6F6';
   ctx.lineWidth = 3;
-  ctx.stroke();
-}
-
-function drawSectorIcon(type, x, y, color) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.strokeStyle = color;
-  ctx.fillStyle = 'transparent';
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-
-  if (type === 'sad') drawSadIcon(color);
-  else if (type === 'retry') drawRetryIcon(color);
-  else if (type === 'coupon') drawCouponIcon(color);
-  else if (type === 'gift') drawGiftIcon(color);
-  else if (type === 'pack') drawPackIcon(color);
-
-  ctx.restore();
-}
-
-function drawSadIcon(color) {
-  ctx.beginPath();
-  ctx.arc(0, 0, 18, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(-8, -4); ctx.lineTo(-2, 2); ctx.moveTo(-2, -4); ctx.lineTo(-8, 2);
-  ctx.moveTo(8, -4); ctx.lineTo(2, 2); ctx.moveTo(2, -4); ctx.lineTo(8, 2);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(0, 12, 8, Math.PI * 1.15, Math.PI * 1.85);
-  ctx.stroke();
-}
-
-function drawRetryIcon(color) {
-  ctx.beginPath();
-  ctx.arc(0, 0, 19, Math.PI * 0.1, Math.PI * 1.25);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(-18, -6); ctx.lineTo(-18, 9); ctx.lineTo(-6, 1);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(0, 0, 19, Math.PI * 1.1, Math.PI * 2.25);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(18, 6); ctx.lineTo(18, -9); ctx.lineTo(6, -1);
-  ctx.stroke();
-}
-
-function drawCouponIcon(color) {
-  ctx.save();
-  ctx.rotate(Math.PI / 14);
-  ctx.beginPath();
-  ctx.rect(-22, -13, 44, 26);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(-5, -10); ctx.lineTo(-5, 10);
-  ctx.setLineDash([2, 3]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.font = '700 19px "Futura Std", Arial, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = color;
-  ctx.fillText('%', 8, 0);
-  ctx.restore();
-}
-
-function drawGiftIcon(color) {
-  ctx.beginPath();
-  ctx.rect(-18, -2, 36, 22);
-  ctx.rect(-21, -11, 42, 9);
-  ctx.moveTo(0, -11); ctx.lineTo(0, 20);
-  ctx.moveTo(-21, -2); ctx.lineTo(21, -2);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(-7, -14, 7, Math.PI * 0.1, Math.PI * 1.2);
-  ctx.arc(7, -14, 7, Math.PI * -0.2, Math.PI * 0.9, true);
-  ctx.stroke();
-}
-
-function drawPackIcon(color) {
-  drawMiniBox(-13, -16, 17, 17);
-  drawMiniBox(4, -16, 17, 17);
-  drawMiniBox(-21, 1, 17, 17);
-  drawMiniBox(-4, 1, 17, 17);
-  drawMiniBox(13, 1, 17, 17);
-}
-
-function drawMiniBox(x, y, w, h) {
-  ctx.beginPath();
-  ctx.rect(x, y, w, h);
-  ctx.moveTo(x + w / 2, y); ctx.lineTo(x + w / 2, y + h);
-  ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2);
   ctx.stroke();
 }
 

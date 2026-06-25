@@ -419,76 +419,37 @@
 // ── CONFIG ───────────────────────────────────────────────────────────────────
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-// ── SECTORS — 11 caselles ────────────────────────────────────────────────────
+// ── SECTORS — 11 caselles: 4 BL + 4 TA + 1 DC + 1 G + 1 LP ─────────────────
+// Alternant roig/gris, seguint el disseny del PDF
 var SECTORS = [
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
   { label: 'Discount\nCoupon',        color: '#D9D8D6', id: 'discount'    },
-  { label: 'Lurbel Pack',             color: '#E2001A', id: 'lurbel_pack' },
+  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
   { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
   { label: 'Gift',                    color: '#D9D8D6', id: 'gift'        },
   { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
+  { label: 'Lurbel Pack',             color: '#D9D8D6', id: 'lurbel_pack' },
+  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
+  { label: 'Better Luck\nNext Time!', color: '#D9D8D6', id: 'better_luck' },
+  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
 ];
+// 4 better_luck + 4 try_again + 1 discount + 1 gift + 1 lurbel_pack = 11
 
-// ── PRIZE POOLS ──────────────────────────────────────────────────────────────
-// Pool SENSE Try Again — per quan ja hem caigut a Try Again i necessitem un resultat final
+// Pool FINAL (sense Try Again): per nova tirada després de Try Again
 var FINAL_POOL = [
-  'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!',
-  'Discount Coupon',
-  'Gift',
-  'Lurbel Pack'
+  'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
+  'Discount Coupon','Gift','Lurbel Pack'
 ];
 
-// Pool INICIAL (inclou Try Again) — per quan el servidor no respon
+// Pool INICIAL: per fallback local si el servidor no respon
 var FULL_POOL = [
-  'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!',
-  'Try Again', 'Try Again', 'Try Again', 'Try Again',
-  'Discount Coupon',
-  'Gift',
-  'Lurbel Pack'
+  'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
+  'Try Again','Try Again','Try Again','Try Again',
+  'Discount Coupon','Gift','Lurbel Pack'
 ];
 
-// ── RESULTATS ────────────────────────────────────────────────────────────────
-var PRIZE_INFO = {
-  'Lurbel Pack': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado el<br>Lurbel Pack!',
-    body: '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎉'
-  },
-  'Gift': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado un<br>regalo sorpresa!',
-    body: 'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎁'
-  },
-  'Discount Coupon': {
-    win: true,
-    eyebrow: '¡Enhorabuena!',
-    title: '¡Has ganado un<br>cupón descuento!',
-    body: 'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
-    note: 'Muestra esta pantalla en tienda.',
-    icon: '🎟'
-  },
-  'Better Luck Next Time!': {
-    win: false,
-    eyebrow: 'Sin suerte esta vez',
-    title: 'Mejor suerte<br>la próxima',
-    body: '¡Gracias por participar!',
-    note: '',
-    icon: '😅'
-  }
-};
-
-// ── MAPA PREMI → SECTOR ──────────────────────────────────────────────────────
+// Mapa premi → id de sector
 var PRIZE_TO_SECTOR = {
   'Lurbel Pack':            'lurbel_pack',
   'Gift':                   'gift',
@@ -497,11 +458,47 @@ var PRIZE_TO_SECTOR = {
   'Better Luck Next Time!': 'better_luck'
 };
 
+// ── RESULTATS ────────────────────────────────────────────────────────────────
+var PRIZE_INFO = {
+  'Lurbel Pack': {
+    win:     true,
+    eyebrow: '¡Enhorabuena!',
+    title:   '¡Has ganado el<br>Lurbel Pack!',
+    body:    '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
+    note:    'Muestra esta pantalla en tienda.',
+    icon:    '🎉'
+  },
+  'Gift': {
+    win:     true,
+    eyebrow: '¡Enhorabuena!',
+    title:   '¡Has ganado un<br>regalo sorpresa!',
+    body:    'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
+    note:    'Muestra esta pantalla en tienda.',
+    icon:    '🎁'
+  },
+  'Discount Coupon': {
+    win:     true,
+    eyebrow: '¡Enhorabuena!',
+    title:   '¡Has ganado un<br>cupón descuento!',
+    body:    'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
+    note:    'Muestra esta pantalla en tienda.',
+    icon:    '🎟'
+  },
+  'Better Luck Next Time!': {
+    win:     false,
+    eyebrow: 'Sin suerte esta vez',
+    title:   'Mejor suerte<br>la próxima',
+    body:    '¡Gracias por participar!',
+    note:    '',
+    icon:    '😅'
+  }
+};
+
 // ── STATE ────────────────────────────────────────────────────────────────────
-var userData      = {};
-var currentPrize  = null;   // premi que ha de mostrar la ruleta en aquesta tirada
-var spinAngle     = 0;
-var spinning      = false;
+var userData    = {};
+var serverPrize = null;  // premi que ha de mostrar la ruleta en AQUESTA tirada
+var spinning    = false;
+var spinAngle   = 0;
 
 // ── CANVAS ───────────────────────────────────────────────────────────────────
 var canvas = document.getElementById('wheel-canvas');
@@ -514,50 +511,57 @@ function drawWheel(angle) {
   var cy = canvas.height / 2;
   var r  = cx - 4;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   for (var i = 0; i < N; i++) {
     var s     = SECTORS[i];
     var start = angle + i * ARC - Math.PI / 2;
     var end   = start + ARC;
-    // Sector
+
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
     ctx.fillStyle = s.color; ctx.fill();
-    ctx.strokeStyle = 'rgba(26,26,26,0.55)'; ctx.lineWidth = 2; ctx.stroke();
-    // Text
+    ctx.strokeStyle = 'rgba(26,26,26,0.6)'; ctx.lineWidth = 2; ctx.stroke();
+
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
-    s.label.split('\n').forEach(function(line, li, arr) {
-      ctx.fillText(line.toUpperCase(), r - 14, (li - (arr.length - 1) / 2) * 13 + 4);
+    ctx.font = 'bold 13px "Barlow Condensed", "Arial Narrow", sans-serif';
+    var lines = s.label.split('\n');
+    lines.forEach(function(line, li) {
+      ctx.fillText(line.toUpperCase(), r - 12, (li - (lines.length - 1) / 2) * 15 + 5);
     });
     ctx.restore();
   }
+
   ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 3; ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 3; ctx.stroke();
 }
+
 drawWheel(0);
 
-// ── ANIMACIÓ DE GIR ──────────────────────────────────────────────────────────
-function animateSpin(targetPrize, onFinished) {
-  // Troba sectors que corresponen al premi
-  var sectorId   = PRIZE_TO_SECTOR[targetPrize] || 'better_luck';
+// ── SPIN ─────────────────────────────────────────────────────────────────────
+// Gira la ruleta cap a `prizeToShow` i crida onDone(prizeShown) en acabar.
+// onDone rep el premi que s'ha mostrat — NO el serverPrize futur.
+function runSpin(prizeToShow, onDone) {
+  if (spinning) return;
+  spinning = true;
+  document.getElementById('btn-spin').disabled = true;
+
+  var sectorId   = PRIZE_TO_SECTOR[prizeToShow] || 'better_luck';
   var candidates = [];
   SECTORS.forEach(function(s, i) { if (s.id === sectorId) candidates.push(i); });
   var targetIdx  = candidates[Math.floor(Math.random() * candidates.length)];
 
-  var extraRot   = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
+  var extraRot   = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
   var targetAng  = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
   var finalAngle = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAng;
   var startAngle = spinAngle;
   var startTs    = null;
-  var DURATION   = 4500;
-
-  spinning = true;
-  document.getElementById('btn-spin').disabled = true;
+  var DURATION   = 5000;
 
   function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
   function frame(ts) {
     if (!startTs) startTs = ts;
     var p = Math.min((ts - startTs) / DURATION, 1);
@@ -567,7 +571,7 @@ function animateSpin(targetPrize, onFinished) {
       requestAnimationFrame(frame);
     } else {
       spinning = false;
-      onFinished();
+      onDone(prizeToShow);  // <-- sempre el premi que S'HA MOSTRAT, no el futur
     }
   }
   requestAnimationFrame(frame);
@@ -578,19 +582,21 @@ function spinWheel() {
   if (spinning) return;
   document.getElementById('try-again-toast').classList.remove('visible');
 
-  animateSpin(currentPrize, function() {
-    // L'animació ha acabat i la ruleta apunta a currentPrize
-    if (currentPrize === 'Try Again') {
-      // Try Again: calculem el nou premi LOCALMENT (sense servidor) i tornem a girar
+  // Capturem el premi d'aquesta tirada ABANS de girar
+  var thisSpin = serverPrize;
+
+  runSpin(thisSpin, function(prizeShown) {
+    // prizeShown === thisSpin sempre (és el que hem passat a runSpin)
+    if (prizeShown === 'Try Again') {
+      // Mostrem toast
       document.getElementById('try-again-toast').classList.add('visible');
-      currentPrize = pickFrom(FINAL_POOL);  // mai Try Again
-      // Petit delay perquè l'usuari vegi el toast, després habilitem botó
+      // Ara sí: actualitzem serverPrize per a la PROPERA tirada (mai Try Again)
+      serverPrize = pickFrom(FINAL_POOL);
       setTimeout(function() {
         document.getElementById('btn-spin').disabled = false;
-      }, 800);
+      }, 1000);
     } else {
-      // Premi definitiu → mostra resultat
-      showResult(currentPrize);
+      showResult(prizeShown);
     }
   });
 }
@@ -598,12 +604,15 @@ function spinWheel() {
 // ── RESULTAT ─────────────────────────────────────────────────────────────────
 function showResult(prize) {
   var info = PRIZE_INFO[prize] || PRIZE_INFO['Better Luck Next Time!'];
+  if (!PRIZE_INFO[prize]) prize = 'Better Luck Next Time!';
+
   document.getElementById('result-icon').innerHTML      = info.icon;
   document.getElementById('result-icon').className      = 'result-icon ' + (info.win ? 'win' : 'loss');
   document.getElementById('result-eyebrow').textContent = info.eyebrow;
   document.getElementById('result-title').innerHTML     = info.title;
   document.getElementById('result-body').textContent    = info.body;
   document.getElementById('result-note').textContent    = info.note;
+
   if (info.win) {
     document.getElementById('result-prize-box').style.display = 'block';
     document.getElementById('result-prize-name').textContent  = prize;
@@ -643,13 +652,12 @@ function submitForm() {
     clearTimeout(fallbackTimer);
     loadEl.classList.remove('active');
     btnEl.disabled = false;
-    currentPrize = prize;
+    serverPrize = prize;
     showScreen('screen-wheel');
   }
 
-  // Fallback: si el servidor no respon en 8s, tirem amb premi local
   var fallbackTimer = setTimeout(function() {
-    console.warn('Server timeout — using local prize');
+    console.warn('Timeout — local prize');
     proceed(pickFrom(FULL_POOL));
   }, 8000);
 
@@ -670,26 +678,26 @@ function submitForm() {
     proceed(data.prize || pickFrom(FULL_POOL));
   })
   .catch(function(err) {
-    console.warn('Server error — using local prize:', err);
+    console.warn('Fetch error — local prize:', err);
     proceed(pickFrom(FULL_POOL));
   });
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
-function pickFrom(pool) {
-  return pool[Math.floor(Math.random() * pool.length)];
-}
+function pickFrom(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
+
 function showError(msg) {
   var el = document.getElementById('error-msg');
-  el.textContent = msg;
-  el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
 function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
 
 </script>

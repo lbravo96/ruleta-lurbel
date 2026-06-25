@@ -5,701 +5,480 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruleta Lurbel × Like Sport</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#E2001A;--reddark:#B3191A;--black:#1A1A1A;--grey:#D9D8D6;--mid:#C8C7C5;--white:#fff}
+html,body{min-height:100%;font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(26,26,26,.96);border-bottom:1px solid rgba(255,255,255,.08)}
+header img{height:24px}
+.htag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
 
-  :root {
-    --red: #E2001A;
-    --red-dark: #B3191A;
-    --black: #1A1A1A;
-    --grey-mid: #C8C7C5;
-    --white: #FFFFFF;
-  }
+/* SCREENS */
+.screen{display:none;min-height:100vh;padding-top:56px}
+.screen.active{display:flex;flex-direction:column}
 
-  html, body {
-    height: 100%;
-    font-family: 'Barlow', sans-serif;
-    background: var(--black);
-    color: var(--white);
-    overflow-x: hidden;
-  }
+/* === SCREEN 1: FORM === */
+#s-form{position:relative;align-items:center;justify-content:center}
+.hero-bg{position:fixed;inset:0;background:url('https://lurbel.eu/uploads/lurbel-spring-summer-26.jpg') center/cover no-repeat;z-index:0}
+.hero-ov{position:fixed;inset:0;background:linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(226,0,26,.15) 100%);z-index:1}
+.fbox{position:relative;z-index:2;width:100%;max-width:460px;margin:32px 16px;background:rgba(26,26,26,.85);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);padding:36px 32px}
+.feyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.ftitle{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:800;line-height:1;text-transform:uppercase;margin-bottom:6px}
+.ftitle span{color:var(--red)}
+.fsub{font-size:13px;color:var(--mid);line-height:1.5;margin-bottom:28px}
+.frow{display:flex;gap:10px}
+.fg{display:flex;flex-direction:column;flex:1;margin-bottom:14px}
+.fg label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+.fg input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color .2s;width:100%}
+.fg input:focus{border-color:var(--red)}
+.fg input::placeholder{color:rgba(255,255,255,.25)}
+.chk{display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;cursor:pointer}
+.chk input{width:17px;height:17px;min-width:17px;accent-color:var(--red);margin-top:2px;cursor:pointer}
+.chk span{font-size:12px;color:var(--mid);line-height:1.5}
+.chk a{color:var(--mid);text-decoration:underline}
+.errmsg{display:none;background:rgba(226,0,26,.15);border:1px solid var(--red);color:#ff7070;font-size:13px;padding:11px 13px;margin-bottom:14px}
+.btnred{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:15px 20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.btnred:hover{background:var(--reddark)}
+.btnred:disabled{background:#555;cursor:not-allowed}
 
-  /* ── HEADER ── */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    height: 64px;
-    background: rgba(26,26,26,0.95);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
-  }
-  header img { height: 28px; }
-  .header-tag {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--grey-mid);
-  }
+/* === SCREEN 2: WHEEL === */
+#s-wheel{align-items:center;justify-content:center;background:var(--black);padding:32px 16px}
+.wsection{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;max-width:540px}
+.whead{text-align:center}
+.weyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.whead h2{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;text-transform:uppercase}
+.toast{display:none;background:rgba(226,0,26,.12);border:1px solid rgba(226,0,26,.4);padding:12px 20px;text-align:center}
+.toast.show{display:block}
+.toast p{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.toast span{color:var(--red)}
+.wwrap{position:relative;width:460px;height:460px}
+#wcanvas{border-radius:50%;box-shadow:0 0 0 5px var(--black),0 0 0 9px rgba(226,0,26,.35),0 20px 50px rgba(0,0,0,.7);display:block}
+.wptr{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:30px solid var(--red);filter:drop-shadow(0 2px 6px rgba(226,0,26,.8));z-index:10}
+.wcap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;background:var(--black);border-radius:50%;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 0 0 2px rgba(226,0,26,.25)}
+.wcap svg{width:32px;height:32px}
+.btnspin{background:var(--red);color:var(--white);border:none;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:17px 60px;cursor:pointer;transition:background .2s}
+.btnspin:hover{background:var(--reddark)}
+.btnspin:disabled{background:#444;cursor:not-allowed;opacity:.6}
 
-  /* ── SCREENS ── */
-  .screen { display: none; min-height: 100vh; padding-top: 64px; }
-  .screen.active { display: flex; flex-direction: column; }
+/* === SCREEN 3: RESULT === */
+#s-result{align-items:center;justify-content:center;background:var(--black);padding:80px 16px 40px}
+.rcard{width:100%;max-width:440px;text-align:center}
+.ricon{width:78px;height:78px;margin:0 auto 22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px}
+.ricon.win{background:rgba(226,0,26,.15);border:2px solid var(--red)}
+.ricon.loss{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15)}
+.reyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.rtitle{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:14px}
+.rbody{font-size:14px;color:var(--mid);line-height:1.6;margin-bottom:28px;max-width:340px;margin-left:auto;margin-right:auto}
+.rbox{background:rgba(226,0,26,.1);border:1px solid rgba(226,0,26,.3);padding:18px 22px;margin-bottom:28px}
+.rbox .rlabel{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.rbox .rname{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;text-transform:uppercase}
+.rnote{font-size:12px;color:rgba(255,255,255,.32);line-height:1.5}
 
-  /* ── SCREEN 1: FORM ── */
-  #screen-form { position: relative; align-items: center; justify-content: center; }
+/* LOADING */
+.loadov{display:none;position:fixed;inset:0;background:rgba(26,26,26,.87);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.loadov.show{display:flex}
+.spinner{width:38px;height:38px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loadtxt{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
 
-  .hero-bg {
-    position: fixed; inset: 0;
-    background: url('https://lurbel.eu/uploads/lurbel-spring-summer-26.jpg') center/cover no-repeat;
-    z-index: 0;
-  }
-  .hero-overlay {
-    position: fixed; inset: 0;
-    background: linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(226,0,26,0.18) 100%);
-    z-index: 1;
-  }
-  .form-container {
-    position: relative; z-index: 2;
-    width: 100%; max-width: 480px;
-    margin: 40px 16px;
-    background: rgba(26,26,26,0.82);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(16px);
-    padding: 40px 36px;
-  }
-  .form-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 12px;
-  }
-  .form-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 42px; font-weight: 800;
-    line-height: 1.0; text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .form-title span { color: var(--red); }
-  .form-subtitle { font-size: 14px; color: var(--grey-mid); line-height: 1.5; margin-bottom: 32px; }
-
-  .form-row { display: flex; gap: 12px; }
-  .form-group { display: flex; flex-direction: column; flex: 1; margin-bottom: 16px; }
-
-  label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--grey-mid); margin-bottom: 6px;
-  }
-  input[type="text"], input[type="email"] {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.14);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif; font-size: 15px;
-    padding: 12px 14px; outline: none;
-    transition: border-color 0.2s; width: 100%;
-  }
-  input:focus { border-color: var(--red); }
-  input::placeholder { color: rgba(255,255,255,0.25); }
-
-  .checkbox-group {
-    display: flex; align-items: flex-start;
-    gap: 12px; margin-bottom: 28px; cursor: pointer;
-  }
-  .checkbox-group input[type="checkbox"] {
-    width: 18px; height: 18px; min-width: 18px;
-    accent-color: var(--red); cursor: pointer; margin-top: 2px;
-  }
-  .checkbox-group span { font-size: 12px; color: var(--grey-mid); line-height: 1.5; }
-  .checkbox-group a { color: var(--grey-mid); text-decoration: underline; }
-
-  .btn-primary {
-    width: 100%; background: var(--red); color: var(--white);
-    border: none;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    padding: 16px 24px; cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-  }
-  .btn-primary:hover { background: var(--red-dark); }
-  .btn-primary:active { transform: scale(0.99); }
-  .btn-primary:disabled { background: #555; cursor: not-allowed; }
-
-  .error-msg {
-    display: none;
-    background: rgba(226,0,26,0.15);
-    border: 1px solid var(--red);
-    color: #ff6b6b; font-size: 13px;
-    padding: 12px 14px; margin-bottom: 16px;
-  }
-
-  /* ── SCREEN 2: WHEEL ── */
-  #screen-wheel {
-    align-items: center; justify-content: center;
-    background: var(--black); padding: 40px 16px;
-    min-height: 100vh;
-  }
-  .wheel-section {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 28px;
-    width: 100%; max-width: 560px;
-  }
-  .wheel-heading { text-align: center; }
-  .wheel-heading .eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 8px;
-  }
-  .wheel-heading h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 32px; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.02em;
-  }
-
-  .wheel-wrapper {
-    position: relative;
-    width: 480px; height: 480px;
-  }
-  #wheel-canvas {
-    border-radius: 50%;
-    box-shadow: 0 0 0 6px var(--black), 0 0 0 10px rgba(226,0,26,0.35), 0 24px 60px rgba(0,0,0,0.7);
-    display: block;
-  }
-  .wheel-pointer {
-    position: absolute;
-    top: -18px; left: 50%;
-    transform: translateX(-50%);
-    width: 0; height: 0;
-    border-left: 16px solid transparent;
-    border-right: 16px solid transparent;
-    border-top: 32px solid var(--red);
-    filter: drop-shadow(0 2px 8px rgba(226,0,26,0.8));
-    z-index: 10;
-  }
-  .wheel-center-cap {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 64px; height: 64px;
-    background: var(--black);
-    border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.2);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 10;
-    box-shadow: 0 0 0 2px rgba(226,0,26,0.3);
-  }
-  .wheel-center-cap svg { width: 36px; height: 36px; }
-
-  /* Try Again toast */
-  .try-again-toast {
-    display: none;
-    background: rgba(226,0,26,0.12);
-    border: 1px solid rgba(226,0,26,0.4);
-    padding: 14px 20px;
-    text-align: center;
-    animation: fadeIn 0.4s ease;
-  }
-  .try-again-toast.visible { display: block; }
-  .try-again-toast p {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--white);
-  }
-  .try-again-toast span { color: var(--red); }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-  .btn-spin {
-    background: var(--red); color: var(--white);
-    border: none;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px; font-weight: 800;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 18px 64px; cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-  }
-  .btn-spin:hover { background: var(--red-dark); }
-  .btn-spin:disabled { background: #444; cursor: not-allowed; opacity: 0.6; }
-
-  /* ── SCREEN 3: RESULT ── */
-  #screen-result {
-    align-items: center; justify-content: center;
-    background: var(--black); padding: 80px 16px 40px;
-  }
-  .result-card { width: 100%; max-width: 460px; text-align: center; }
-  .result-icon {
-    width: 80px; height: 80px;
-    margin: 0 auto 24px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-  }
-  .result-icon.win { background: rgba(226,0,26,0.15); border: 2px solid var(--red); }
-  .result-icon.loss { background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15); }
-
-  .result-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 12px;
-  }
-  .result-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 44px; font-weight: 800;
-    text-transform: uppercase; line-height: 1.0; margin-bottom: 16px;
-  }
-  .result-body {
-    font-size: 15px; color: var(--grey-mid); line-height: 1.6;
-    margin-bottom: 32px; max-width: 360px; margin-left: auto; margin-right: auto;
-  }
-  .result-prize-box {
-    background: rgba(226,0,26,0.1);
-    border: 1px solid rgba(226,0,26,0.3);
-    padding: 20px 24px; margin-bottom: 32px;
-  }
-  .result-prize-box .prize-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 6px;
-  }
-  .result-prize-box .prize-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 28px; font-weight: 800;
-    text-transform: uppercase; color: var(--white);
-  }
-  .result-note { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.5; }
-
-  /* ── LOADING ── */
-  .loading-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(26,26,26,0.85); z-index: 200;
-    align-items: center; justify-content: center;
-    flex-direction: column; gap: 16px;
-  }
-  .loading-overlay.active { display: flex; }
-  .spinner {
-    width: 40px; height: 40px;
-    border: 3px solid rgba(255,255,255,0.1);
-    border-top-color: var(--red);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--grey-mid);
-  }
-
-  @media (max-width: 560px) {
-    .form-container { padding: 28px 20px; margin: 24px 12px; }
-    .form-title { font-size: 32px; }
-    .form-row { flex-direction: column; gap: 0; }
-    .wheel-wrapper { width: 320px; height: 320px; }
-    #wheel-canvas { width: 320px !important; height: 320px !important; }
-    .wheel-center-cap { width: 44px; height: 44px; }
-    .wheel-center-cap svg { width: 24px; height: 24px; }
-  }
+@media(max-width:520px){
+  .fbox{padding:24px 18px;margin:20px 10px}
+  .ftitle{font-size:30px}
+  .frow{flex-direction:column;gap:0}
+  .wwrap{width:310px;height:310px}
+  #wcanvas{width:310px!important;height:310px!important}
+  .wcap{width:42px;height:42px}
+  .wcap svg{width:22px;height:22px}
+}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div class="loading-overlay" id="loading">
+<div class="loadov" id="loadov">
   <div class="spinner"></div>
-  <div class="loading-text">Comprobando participación…</div>
+  <div class="loadtxt" id="loadtxt">Comprobando…</div>
 </div>
 
-<!-- HEADER -->
 <header>
   <img src="https://lurbel.eu/uploads/logo-lurbel-white.svg" alt="Lurbel" onerror="this.style.display='none'">
-  <span class="header-tag">Lurbel × Like Sport</span>
+  <span class="htag">Lurbel × Like Sport</span>
 </header>
 
 <!-- SCREEN 1: FORM -->
-<div class="screen active" id="screen-form">
+<div class="screen active" id="s-form">
   <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="form-container">
-    <div class="form-eyebrow">Lurbel × Like Sport</div>
-    <h1 class="form-title">Gira la ruleta<br><span>y gana</span></h1>
-    <p class="form-subtitle">Rellena tus datos y prueba suerte. Hay premios Lurbel esperándote.</p>
-
-    <div class="error-msg" id="error-msg"></div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
-      </div>
-      <div class="form-group">
-        <label for="apellidos">Apellidos</label>
-        <input type="text" id="apellidos" placeholder="Tus apellidos" autocomplete="family-name">
-      </div>
+  <div class="hero-ov"></div>
+  <div class="fbox">
+    <div class="feyebrow">Lurbel × Like Sport</div>
+    <h1 class="ftitle">Gira la ruleta<br><span>y gana</span></h1>
+    <p class="fsub">Rellena tus datos y prueba suerte. Hay premios Lurbel esperándote.</p>
+    <div class="errmsg" id="errmsg"></div>
+    <div class="frow">
+      <div class="fg"><label>Nombre</label><input id="f-nombre" placeholder="Tu nombre" autocomplete="given-name"></div>
+      <div class="fg"><label>Apellidos</label><input id="f-apellidos" placeholder="Tus apellidos" autocomplete="family-name"></div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="tu@email.com" autocomplete="email">
-    </div>
-    <div class="form-group">
-      <label for="ciudad">Ciudad</label>
-      <input type="text" id="ciudad" placeholder="Tu ciudad" autocomplete="address-level2">
-    </div>
-
-    <label class="checkbox-group" for="lopd">
-      <input type="checkbox" id="lopd">
+    <div class="fg"><label>Email</label><input id="f-email" type="email" placeholder="tu@email.com" autocomplete="email"></div>
+    <div class="fg"><label>Ciudad</label><input id="f-ciudad" placeholder="Tu ciudad" autocomplete="address-level2"></div>
+    <label class="chk">
+      <input type="checkbox" id="f-lopd">
       <span>He leído y acepto la <a href="https://lurbel.eu/politica-de-privacidad" target="_blank">política de privacidad</a> de MLS Textiles 1992 S.L. y consiento el tratamiento de mis datos personales para la gestión de esta promoción.</span>
     </label>
-
-    <button class="btn-primary" id="btn-form" onclick="submitForm()">
-      <span>Girar la ruleta</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <button class="btnred" id="btn-form" onclick="submitForm()">
+      Girar la ruleta
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </button>
   </div>
 </div>
 
 <!-- SCREEN 2: WHEEL -->
-<div class="screen" id="screen-wheel">
-  <div class="wheel-section">
-    <div class="wheel-heading">
-      <div class="eyebrow">Tu turno</div>
-      <h2 id="wheel-title">¡Gira y descubre tu premio!</h2>
+<div class="screen" id="s-wheel">
+  <div class="wsection">
+    <div class="whead">
+      <div class="weyebrow">Tu turno</div>
+      <h2>¡Gira y descubre tu premio!</h2>
     </div>
-
-    <div class="try-again-toast" id="try-again-toast">
-      <p>🔄 ¡<span>Try Again!</span> Vuelve a girar la ruleta</p>
+    <div class="toast" id="toast">
+      <p>🔄 <span>¡Try Again!</span> Vuelve a girar</p>
     </div>
-
-    <div class="wheel-wrapper">
-      <div class="wheel-pointer"></div>
-      <canvas id="wheel-canvas" width="480" height="480"></canvas>
-      <div class="wheel-center-cap">
-        <!-- Lurbel imagotip SVG inline -->
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 8C27 8 8 27 8 50s19 42 42 42 42-19 42-42S73 8 50 8z" fill="none"/>
-          <!-- Lurbel swoosh symbol based on the imagotip -->
-          <path d="M62 18c-8-4-18-4-26 0C24 24 16 34 16 46c0 8 3 15 8 20 2 2 5 1 5-2V42c0-10 8-18 18-18 4 0 8 1 11 3 5 3 8 9 8 15v6c0 3 3 5 5 3 5-5 8-12 8-19 0-6-2-11-6-15-3-3-7-6-11-7z" fill="white"/>
-          <path d="M29 70c-2-2-5-1-5 2 4 7 11 12 19 13 9 2 18-1 24-7 2-2 1-5-1-6-7-3-13-8-16-15-1-2-4-2-5 0-3 5-8 10-14 13H29z" fill="white" opacity="0.85"/>
+    <div class="wwrap">
+      <div class="wptr"></div>
+      <canvas id="wcanvas" width="460" height="460"></canvas>
+      <div class="wcap">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="47" cy="64" rx="28" ry="30" fill="none" stroke="white" stroke-width="9"/>
+          <path d="M47 34 C47 34 62 20 80 28 C95 35 100 52 95 66 C91 77 82 84 82 84" fill="none" stroke="white" stroke-width="9" stroke-linecap="round"/>
+          <path d="M75 78 C75 78 90 70 98 55" fill="none" stroke="white" stroke-width="9" stroke-linecap="round"/>
         </svg>
       </div>
     </div>
-
-    <button class="btn-spin" id="btn-spin" onclick="spinWheel()">¡Girar!</button>
+    <button class="btnspin" id="btn-spin" onclick="spinWheel()">¡Girar!</button>
   </div>
 </div>
 
 <!-- SCREEN 3: RESULT -->
-<div class="screen" id="screen-result">
-  <div class="result-card">
-    <div class="result-icon" id="result-icon"></div>
-    <div class="result-eyebrow" id="result-eyebrow"></div>
-    <h2 class="result-title" id="result-title"></h2>
-    <p class="result-body" id="result-body"></p>
-    <div class="result-prize-box" id="result-prize-box" style="display:none">
-      <div class="prize-label">Tu premio</div>
-      <div class="prize-name" id="result-prize-name"></div>
+<div class="screen" id="s-result">
+  <div class="rcard">
+    <div class="ricon" id="r-icon"></div>
+    <div class="reyebrow" id="r-eyebrow"></div>
+    <div class="rtitle" id="r-title"></div>
+    <div class="rbody" id="r-body"></div>
+    <div class="rbox" id="r-box" style="display:none">
+      <div class="rlabel">Tu premio</div>
+      <div class="rname" id="r-name"></div>
     </div>
-    <p class="result-note" id="result-note"></p>
+    <div class="rnote" id="r-note"></div>
   </div>
 </div>
 
 <script>
-// ── CONFIG ───────────────────────────────────────────────────────────────────
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
+/* ═══════════════════════════════════════════════════════
+   CONFIGURACIÓ
+═══════════════════════════════════════════════════════ */
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-// ── SECTORS — 11 caselles: 4 BL + 4 TA + 1 DC + 1 G + 1 LP ─────────────────
-// Alternant roig/gris, seguint el disseny del PDF
+/* ═══════════════════════════════════════════════════════
+   PREMIS — strings exactes, mai canviar
+═══════════════════════════════════════════════════════ */
+var P_LURBEL   = 'Lurbel Pack';
+var P_GIFT     = 'Gift';
+var P_DISCOUNT = 'Discount Coupon';
+var P_BETTER   = 'Better Luck Next Time!';
+var P_TRY      = 'Try Again';
+
+/* Pool inicial (el servidor pot retornar qualsevol) */
+var POOL_FULL = [
+  P_BETTER, P_BETTER, P_BETTER, P_BETTER,
+  P_TRY, P_TRY, P_TRY, P_TRY,
+  P_DISCOUNT, P_GIFT, P_LURBEL
+];
+
+/* Pool Try Again: mai retorna Try Again per evitar bucles infinits */
+var POOL_RETRY = [
+  P_BETTER, P_BETTER, P_BETTER, P_BETTER,
+  P_DISCOUNT, P_GIFT, P_LURBEL
+];
+
+/* ═══════════════════════════════════════════════════════
+   SECTORS — 11 caselles
+   4× Better Luck + 4× Try Again + 1× Discount + 1× Gift + 1× Lurbel Pack
+═══════════════════════════════════════════════════════ */
 var SECTORS = [
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Discount\nCoupon',        color: '#D9D8D6', id: 'discount'    },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Try Again',               color: '#D9D8D6', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
-  { label: 'Gift',                    color: '#D9D8D6', id: 'gift'        },
-  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
-  { label: 'Lurbel Pack',             color: '#D9D8D6', id: 'lurbel_pack' },
-  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
-  { label: 'Better Luck\nNext Time!', color: '#D9D8D6', id: 'better_luck' },
-  { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
-];
-// 4 better_luck + 4 try_again + 1 discount + 1 gift + 1 lurbel_pack = 11
-
-// Pool FINAL (sense Try Again): per nova tirada després de Try Again
-var FINAL_POOL = [
-  'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
-  'Discount Coupon','Gift','Lurbel Pack'
+  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
+  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
+  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
+  {t: P_DISCOUNT, c:'#D9D8D6', label:'Discount\nCoupon'},
+  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
+  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
+  {t: P_LURBEL,   c:'#E2001A', label:'Lurbel Pack'},
+  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
+  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
+  {t: P_GIFT,     c:'#D9D8D6', label:'Gift'},
+  {t: P_TRY,      c:'#E2001A', label:'Try Again'},
 ];
 
-// Pool INICIAL: per fallback local si el servidor no respon
-var FULL_POOL = [
-  'Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!','Better Luck Next Time!',
-  'Try Again','Try Again','Try Again','Try Again',
-  'Discount Coupon','Gift','Lurbel Pack'
-];
+/* ═══════════════════════════════════════════════════════
+   PANTALLA DE RESULTAT — per premi
+═══════════════════════════════════════════════════════ */
+var RESULTS = {};
+RESULTS[P_LURBEL]   = {win:true,  icon:'🎉', ey:'¡Enhorabuena!',       ti:'¡Has ganado el<br>Lurbel Pack!',       bo:'¡El premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo.', no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_GIFT]     = {win:true,  icon:'🎁', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>regalo sorpresa!',   bo:'Pasa por el mostrador de Like Sport y recoge tu regalo Lurbel.',                              no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_DISCOUNT] = {win:true,  icon:'🎟', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>cupón descuento!',  bo:'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',               no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_BETTER]   = {win:false, icon:'😅', ey:'Sin suerte esta vez', ti:'Mejor suerte<br>la próxima',          bo:'¡Gracias por participar!',                                                                     no:''};
 
-// Mapa premi → id de sector
-var PRIZE_TO_SECTOR = {
-  'Lurbel Pack':            'lurbel_pack',
-  'Gift':                   'gift',
-  'Discount Coupon':        'discount',
-  'Try Again':              'try_again',
-  'Better Luck Next Time!': 'better_luck'
-};
-
-// ── RESULTATS ────────────────────────────────────────────────────────────────
-var PRIZE_INFO = {
-  'Lurbel Pack': {
-    win:     true,
-    eyebrow: '¡Enhorabuena!',
-    title:   '¡Has ganado el<br>Lurbel Pack!',
-    body:    '¡Este es el premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo para gestionar la entrega.',
-    note:    'Muestra esta pantalla en tienda.',
-    icon:    '🎉'
-  },
-  'Gift': {
-    win:     true,
-    eyebrow: '¡Enhorabuena!',
-    title:   '¡Has ganado un<br>regalo sorpresa!',
-    body:    'Pasa por el mostrador de Like Sport y recoge tu regalo sorpresa Lurbel.',
-    note:    'Muestra esta pantalla en tienda.',
-    icon:    '🎁'
-  },
-  'Discount Coupon': {
-    win:     true,
-    eyebrow: '¡Enhorabuena!',
-    title:   '¡Has ganado un<br>cupón descuento!',
-    body:    'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',
-    note:    'Muestra esta pantalla en tienda.',
-    icon:    '🎟'
-  },
-  'Better Luck Next Time!': {
-    win:     false,
-    eyebrow: 'Sin suerte esta vez',
-    title:   'Mejor suerte<br>la próxima',
-    body:    '¡Gracias por participar!',
-    note:    '',
-    icon:    '😅'
-  }
-};
-
-// ── STATE ────────────────────────────────────────────────────────────────────
-var userData    = {};
-var serverPrize = null;  // premi que ha de mostrar la ruleta en AQUESTA tirada
+/* ═══════════════════════════════════════════════════════
+   ESTAT GLOBAL
+═══════════════════════════════════════════════════════ */
 var spinning    = false;
 var spinAngle   = 0;
+var nextPrize   = null;   /* premi que ha de mostrar la PROPERA tirada */
+var userData    = {};
 
-// ── CANVAS ───────────────────────────────────────────────────────────────────
-var canvas = document.getElementById('wheel-canvas');
+/* ═══════════════════════════════════════════════════════
+   CANVAS
+═══════════════════════════════════════════════════════ */
+var canvas = document.getElementById('wcanvas');
 var ctx    = canvas.getContext('2d');
 var N      = SECTORS.length;
 var ARC    = (2 * Math.PI) / N;
 
-function drawWheel(angle) {
-  var cx = canvas.width / 2;
-  var cy = canvas.height / 2;
-  var r  = cx - 4;
+function drawWheel(a) {
+  var cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 4;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   for (var i = 0; i < N; i++) {
-    var s     = SECTORS[i];
-    var start = angle + i * ARC - Math.PI / 2;
-    var end   = start + ARC;
-
-    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
-    ctx.fillStyle = s.color; ctx.fill();
-    ctx.strokeStyle = 'rgba(26,26,26,0.6)'; ctx.lineWidth = 2; ctx.stroke();
-
+    var s = SECTORS[i];
+    var s0 = a + i * ARC - Math.PI / 2;
+    var s1 = s0 + ARC;
+    /* fill */
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s0,s1); ctx.closePath();
+    ctx.fillStyle = s.c; ctx.fill();
+    /* border */
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s0,s1); ctx.closePath();
+    ctx.strokeStyle = 'rgba(26,26,26,0.65)'; ctx.lineWidth = 2; ctx.stroke();
+    /* text */
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(start + ARC / 2);
+    ctx.rotate(s0 + ARC / 2);
     ctx.textAlign = 'right';
-    ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 16px "Barlow Condensed", "Arial Narrow", sans-serif';
+    ctx.fillStyle = s.c === '#E2001A' ? '#fff' : '#1a1a1a';
+    ctx.font = 'bold 15px "Barlow Condensed","Arial Narrow",Arial,sans-serif';
     var lines = s.label.split('\n');
-    lines.forEach(function(line, li) {
-      ctx.fillText(line.toUpperCase(), r - 12, (li - (lines.length - 1) / 2) * 15 + 5);
-    });
+    var lh = 14;
+    for (var l = 0; l < lines.length; l++) {
+      var yo = (l - (lines.length - 1) / 2) * lh + 4;
+      ctx.fillText(lines[l].toUpperCase(), r - 12, yo);
+    }
     ctx.restore();
   }
-
-  ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 3; ctx.stroke();
+  /* outer ring */
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 3; ctx.stroke();
 }
-
 drawWheel(0);
 
-// ── SPIN ─────────────────────────────────────────────────────────────────────
-// Gira la ruleta cap a `prizeToShow` i crida onDone(prizeShown) en acabar.
-// onDone rep el premi que s'ha mostrat — NO el serverPrize futur.
-function runSpin(prizeToShow, onDone) {
-  if (spinning) return;
+/* ═══════════════════════════════════════════════════════
+   ANIMACIÓ
+   prizeName: string exacte del premi que ha d'apuntar el punter
+   onEnd(prizeName): crida quan l'animació acaba
+═══════════════════════════════════════════════════════ */
+function animate(prizeName, onEnd) {
+  /* Troba tots els sectors que corresponen a aquest premi */
+  var candidates = [];
+  for (var i = 0; i < N; i++) {
+    if (SECTORS[i].t === prizeName) candidates.push(i);
+  }
+  if (candidates.length === 0) candidates = [0]; /* fallback segur */
+  var idx = candidates[Math.floor(Math.random() * candidates.length)];
+
+  /* Angle objectiu: centre del sector idx ha d'alinear-se amb el punter (dalt = -π/2) */
+  var targetAng = -(idx * ARC + ARC / 2) + Math.PI / 2;
+  /* Afegim voltes senceres per fer l'animació realista */
+  var fullTurns = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
+  /* Normalitzem l'angle actual a [0, 2π) per calcular bé la distància */
+  var curNorm = ((spinAngle % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+  var tarNorm = ((targetAng % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+  var delta   = tarNorm - curNorm;
+  if (delta < 0) delta += 2*Math.PI;
+  var finalAngle = spinAngle + fullTurns + delta;
+
+  var t0   = null;
+  var DUR  = 5000;
+  var from = spinAngle;
+
+  function ease(x) { return 1 - Math.pow(1 - x, 4); }
+
   spinning = true;
   document.getElementById('btn-spin').disabled = true;
 
-  var sectorId   = PRIZE_TO_SECTOR[prizeToShow] || 'better_luck';
-  var candidates = [];
-  SECTORS.forEach(function(s, i) { if (s.id === sectorId) candidates.push(i); });
-  var targetIdx  = candidates[Math.floor(Math.random() * candidates.length)];
-
-  var extraRot   = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
-  var targetAng  = -(targetIdx * ARC + ARC / 2) + Math.PI / 2;
-  var finalAngle = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAng;
-  var startAngle = spinAngle;
-  var startTs    = null;
-  var DURATION   = 5000;
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
-
   function frame(ts) {
-    if (!startTs) startTs = ts;
-    var p = Math.min((ts - startTs) / DURATION, 1);
-    spinAngle = startAngle + (finalAngle - startAngle) * easeOut(p);
+    if (!t0) t0 = ts;
+    var p = Math.min((ts - t0) / DUR, 1);
+    spinAngle = from + (finalAngle - from) * ease(p);
     drawWheel(spinAngle);
     if (p < 1) {
       requestAnimationFrame(frame);
     } else {
       spinning = false;
-      onDone(prizeToShow);  // <-- sempre el premi que S'HA MOSTRAT, no el futur
+      onEnd(prizeName); /* retornem el premi que hem mostrat */
     }
   }
   requestAnimationFrame(frame);
 }
 
-// ── BOTÓ GIRAR ───────────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════
+   BOTÓ GIRAR
+═══════════════════════════════════════════════════════ */
 function spinWheel() {
   if (spinning) return;
-  document.getElementById('try-again-toast').classList.remove('visible');
 
-  // Capturem el premi d'aquesta tirada ABANS de girar
-  var thisSpin = serverPrize;
+  /* Amaguem toast anterior */
+  document.getElementById('toast').classList.remove('show');
 
-  runSpin(thisSpin, function(prizeShown) {
-    // prizeShown === thisSpin sempre (és el que hem passat a runSpin)
-    if (prizeShown === 'Try Again') {
-      // Mostrem toast
-      document.getElementById('try-again-toast').classList.add('visible');
-      // Ara sí: actualitzem serverPrize per a la PROPERA tirada (mai Try Again)
-      serverPrize = pickFrom(FINAL_POOL);
+  /* El premi d'AQUESTA tirada és nextPrize (assignat pel servidor o local) */
+  var thisPrize = nextPrize;
+
+  animate(thisPrize, function(shown) {
+    /* shown === thisPrize sempre */
+    if (shown === P_TRY) {
+      /* Try Again: mostrem toast i preparem NOU premi per a la propera tirada */
+      document.getElementById('toast').classList.add('show');
+      /* Nou premi de la pool RETRY (mai Try Again) */
+      nextPrize = randFrom(POOL_RETRY);
+      /* Habilitem botó després d'1 segon */
       setTimeout(function() {
         document.getElementById('btn-spin').disabled = false;
       }, 1000);
     } else {
-      showResult(prizeShown);
+      /* Premi definitiu → mostra resultat */
+      showResult(shown);
     }
   });
 }
 
-// ── RESULTAT ─────────────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════
+   RESULTAT
+═══════════════════════════════════════════════════════ */
 function showResult(prize) {
-  var info = PRIZE_INFO[prize] || PRIZE_INFO['Better Luck Next Time!'];
-  if (!PRIZE_INFO[prize]) prize = 'Better Luck Next Time!';
+  var r = RESULTS[prize];
+  if (!r) { r = RESULTS[P_BETTER]; prize = P_BETTER; } /* mai hauria de passar */
 
-  document.getElementById('result-icon').innerHTML      = info.icon;
-  document.getElementById('result-icon').className      = 'result-icon ' + (info.win ? 'win' : 'loss');
-  document.getElementById('result-eyebrow').textContent = info.eyebrow;
-  document.getElementById('result-title').innerHTML     = info.title;
-  document.getElementById('result-body').textContent    = info.body;
-  document.getElementById('result-note').textContent    = info.note;
-
-  if (info.win) {
-    document.getElementById('result-prize-box').style.display = 'block';
-    document.getElementById('result-prize-name').textContent  = prize;
+  document.getElementById('r-icon').textContent    = r.icon;
+  document.getElementById('r-icon').className      = 'ricon ' + (r.win ? 'win' : 'loss');
+  document.getElementById('r-eyebrow').textContent = r.ey;
+  document.getElementById('r-title').innerHTML     = r.ti;
+  document.getElementById('r-body').textContent    = r.bo;
+  document.getElementById('r-note').textContent    = r.no;
+  if (r.win) {
+    document.getElementById('r-box').style.display = 'block';
+    document.getElementById('r-name').textContent  = prize;
   } else {
-    document.getElementById('result-prize-box').style.display = 'none';
+    document.getElementById('r-box').style.display = 'none';
   }
-  showScreen('screen-result');
+  showScreen('s-result');
 }
 
-// ── FORMULARI ────────────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════
+   FORMULARI
+═══════════════════════════════════════════════════════ */
 function submitForm() {
-  var nombre    = document.getElementById('nombre').value.trim();
-  var apellidos = document.getElementById('apellidos').value.trim();
-  var email     = document.getElementById('email').value.trim();
-  var ciudad    = document.getElementById('ciudad').value.trim();
-  var lopd      = document.getElementById('lopd').checked;
+  var nombre    = document.getElementById('f-nombre').value.trim();
+  var apellidos = document.getElementById('f-apellidos').value.trim();
+  var email     = document.getElementById('f-email').value.trim();
+  var ciudad    = document.getElementById('f-ciudad').value.trim();
+  var lopd      = document.getElementById('f-lopd').checked;
 
-  document.getElementById('error-msg').style.display = 'none';
+  document.getElementById('errmsg').style.display = 'none';
 
-  if (!nombre || !apellidos || !email || !ciudad) { showError('Por favor, rellena todos los campos.'); return; }
-  if (!isValidEmail(email))                        { showError('Introduce un email válido.'); return; }
-  if (!lopd)                                       { showError('Debes aceptar la política de privacidad para participar.'); return; }
+  if (!nombre || !apellidos || !email || !ciudad) { showErr('Por favor, rellena todos los campos.'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('Introduce un email válido.'); return; }
+  if (!lopd) { showErr('Debes aceptar la política de privacidad para participar.'); return; }
 
-  userData = { nombre: nombre, apellidos: apellidos, email: email, ciudad: ciudad };
+  userData = {nombre:nombre, apellidos:apellidos, email:email, ciudad:ciudad};
 
-  var btnEl  = document.getElementById('btn-form');
-  var loadEl = document.getElementById('loading');
-  btnEl.disabled = true;
-  loadEl.querySelector('.loading-text').textContent = 'Comprobando participación…';
-  loadEl.classList.add('active');
+  var btn = document.getElementById('btn-form');
+  btn.disabled = true;
+  showLoad('Comprobando participación…');
 
-  var settled = false;
+  /* Fem el fetch amb timeout de 8s.
+     Si el servidor respon → usem el seu premi.
+     Si falla o tarda massa → assignem premi local.
+     En ambdós casos passem a la pantalla de la ruleta. */
+  var done = false;
 
-  function proceed(prize) {
-    if (settled) return;
-    settled = true;
-    clearTimeout(fallbackTimer);
-    loadEl.classList.remove('active');
-    btnEl.disabled = false;
-    serverPrize = prize;
-    showScreen('screen-wheel');
-  }
-
-  var fallbackTimer = setTimeout(function() {
-    console.warn('Timeout — local prize');
-    proceed(pickFrom(FULL_POOL));
+  var timer = setTimeout(function() {
+    if (done) return;
+    done = true;
+    hideLoad();
+    btn.disabled = false;
+    nextPrize = randFrom(POOL_FULL);
+    showScreen('s-wheel');
   }, 8000);
 
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'check', email: email, nombre: nombre, apellidos: apellidos, ciudad: ciudad })
+  fetch(GAS_URL, {
+    method:'POST',
+    body: JSON.stringify({
+      action:'check',
+      email: email,
+      nombre: nombre,
+      apellidos: apellidos,
+      ciudad: ciudad
+    })
   })
-  .then(function(r) { return r.json(); })
+  .then(function(res) { return res.json(); })
   .then(function(data) {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    hideLoad();
+    btn.disabled = false;
+
     if (data.alreadyPlayed) {
-      settled = true;
-      clearTimeout(fallbackTimer);
-      loadEl.classList.remove('active');
-      btnEl.disabled = false;
-      showError('Ya has participado anteriormente con este email.');
+      showErr('Ya has participado anteriormente con este email.');
       return;
     }
-    proceed(data.prize || pickFrom(FULL_POOL));
+    /* El servidor retorna data.prize — validem que sigui un premi conegut */
+    var p = data.prize;
+    if (p !== P_LURBEL && p !== P_GIFT && p !== P_DISCOUNT && p !== P_BETTER && p !== P_TRY) {
+      p = randFrom(POOL_FULL); /* premi desconegut → local */
+    }
+    nextPrize = p;
+    showScreen('s-wheel');
   })
-  .catch(function(err) {
-    console.warn('Fetch error — local prize:', err);
-    proceed(pickFrom(FULL_POOL));
+  .catch(function() {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    hideLoad();
+    btn.disabled = false;
+    nextPrize = randFrom(POOL_FULL);
+    showScreen('s-wheel');
   });
 }
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function pickFrom(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
-
+/* ═══════════════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════════════ */
+function randFrom(pool) {
+  return pool[Math.floor(Math.random() * pool.length)];
+}
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
-
-function showError(msg) {
-  var el = document.getElementById('error-msg');
+function showErr(msg) {
+  var el = document.getElementById('errmsg');
   el.textContent = msg; el.style.display = 'block';
-  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
-
-function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-
+function showLoad(txt) {
+  document.getElementById('loadtxt').textContent = txt;
+  document.getElementById('loadov').classList.add('show');
+}
+function hideLoad() {
+  document.getElementById('loadov').classList.remove('show');
+}
 </script>
 </body>
 </html>

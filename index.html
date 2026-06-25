@@ -419,11 +419,6 @@
 // ── CONFIG ───────────────────────────────────────────────────────────────────
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-// ── PREMIS VÀLIDS ────────────────────────────────────────────────────────────
-var PRIZES_WIN    = ['Lurbel Pack', 'Gift', 'Discount Coupon'];
-var PRIZES_NOWIN  = ['Better Luck Next Time!'];
-var PRIZE_TRY     = 'Try Again';
-
 // ── SECTORS — 11 caselles ────────────────────────────────────────────────────
 var SECTORS = [
   { label: 'Better Luck\nNext Time!', color: '#E2001A', id: 'better_luck' },
@@ -439,17 +434,17 @@ var SECTORS = [
   { label: 'Try Again',               color: '#E2001A', id: 'try_again'   },
 ];
 
-// Mapa de premi → id de sector
-var PRIZE_TO_SECTOR = {
-  'Lurbel Pack':           'lurbel_pack',
-  'Gift':                  'gift',
-  'Discount Coupon':       'discount',
-  'Try Again':             'try_again',
-  'Better Luck Next Time!':'better_luck'
-};
+// ── PRIZE POOLS ──────────────────────────────────────────────────────────────
+// Pool SENSE Try Again — per quan ja hem caigut a Try Again i necessitem un resultat final
+var FINAL_POOL = [
+  'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!',
+  'Discount Coupon',
+  'Gift',
+  'Lurbel Pack'
+];
 
-// Pool local (mateix pes que el servidor)
-var LOCAL_POOL = [
+// Pool INICIAL (inclou Try Again) — per quan el servidor no respon
+var FULL_POOL = [
   'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!', 'Better Luck Next Time!',
   'Try Again', 'Try Again', 'Try Again', 'Try Again',
   'Discount Coupon',
@@ -457,7 +452,7 @@ var LOCAL_POOL = [
   'Lurbel Pack'
 ];
 
-// ── MISSATGES DE RESULTAT ────────────────────────────────────────────────────
+// ── RESULTATS ────────────────────────────────────────────────────────────────
 var PRIZE_INFO = {
   'Lurbel Pack': {
     win: true,
@@ -493,9 +488,18 @@ var PRIZE_INFO = {
   }
 };
 
+// ── MAPA PREMI → SECTOR ──────────────────────────────────────────────────────
+var PRIZE_TO_SECTOR = {
+  'Lurbel Pack':            'lurbel_pack',
+  'Gift':                   'gift',
+  'Discount Coupon':        'discount',
+  'Try Again':              'try_again',
+  'Better Luck Next Time!': 'better_luck'
+};
+
 // ── STATE ────────────────────────────────────────────────────────────────────
 var userData      = {};
-var assignedPrize = null;
+var currentPrize  = null;   // premi que ha de mostrar la ruleta en aquesta tirada
 var spinAngle     = 0;
 var spinning      = false;
 
@@ -514,20 +518,19 @@ function drawWheel(angle) {
     var s     = SECTORS[i];
     var start = angle + i * ARC - Math.PI / 2;
     var end   = start + ARC;
+    // Sector
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
     ctx.fillStyle = s.color; ctx.fill();
-    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.closePath();
     ctx.strokeStyle = 'rgba(26,26,26,0.55)'; ctx.lineWidth = 2; ctx.stroke();
+    // Text
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
     ctx.font = 'bold 11px "Barlow Condensed", sans-serif';
-    var lines = s.label.split('\n');
-    var lineH = 13;
-    lines.forEach(function(line, li) {
-      ctx.fillText(line.toUpperCase(), r - 14, (li - (lines.length - 1) / 2) * lineH + 4);
+    s.label.split('\n').forEach(function(line, li, arr) {
+      ctx.fillText(line.toUpperCase(), r - 14, (li - (arr.length - 1) / 2) * 13 + 4);
     });
     ctx.restore();
   }
@@ -536,15 +539,12 @@ function drawWheel(angle) {
 }
 drawWheel(0);
 
-// ── SPIN ─────────────────────────────────────────────────────────────────────
-function doSpin(onEnd) {
-  if (spinning) return;
-  spinning = true;
-  document.getElementById('btn-spin').disabled = true;
-
-  var targetId   = PRIZE_TO_SECTOR[assignedPrize] || 'better_luck';
+// ── ANIMACIÓ DE GIR ──────────────────────────────────────────────────────────
+function animateSpin(targetPrize, onFinished) {
+  // Troba sectors que corresponen al premi
+  var sectorId   = PRIZE_TO_SECTOR[targetPrize] || 'better_luck';
   var candidates = [];
-  SECTORS.forEach(function(s, i) { if (s.id === targetId) candidates.push(i); });
+  SECTORS.forEach(function(s, i) { if (s.id === sectorId) candidates.push(i); });
   var targetIdx  = candidates[Math.floor(Math.random() * candidates.length)];
 
   var extraRot   = (5 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
@@ -552,75 +552,52 @@ function doSpin(onEnd) {
   var finalAngle = spinAngle - (spinAngle % (2 * Math.PI)) + extraRot + targetAng;
   var startAngle = spinAngle;
   var startTs    = null;
-  var duration   = 4500;
+  var DURATION   = 4500;
+
+  spinning = true;
+  document.getElementById('btn-spin').disabled = true;
 
   function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
-  function animate(ts) {
+  function frame(ts) {
     if (!startTs) startTs = ts;
-    var p = Math.min((ts - startTs) / duration, 1);
+    var p = Math.min((ts - startTs) / DURATION, 1);
     spinAngle = startAngle + (finalAngle - startAngle) * easeOut(p);
     drawWheel(spinAngle);
-    if (p < 1) { requestAnimationFrame(animate); } else { spinning = false; onEnd(); }
+    if (p < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      spinning = false;
+      onFinished();
+    }
   }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(frame);
 }
 
+// ── BOTÓ GIRAR ───────────────────────────────────────────────────────────────
 function spinWheel() {
+  if (spinning) return;
   document.getElementById('try-again-toast').classList.remove('visible');
-  doSpin(function() {
-    if (assignedPrize === PRIZE_TRY) {
-      // Try Again: mostra toast, demana nou premi, torna a girar
+
+  animateSpin(currentPrize, function() {
+    // L'animació ha acabat i la ruleta apunta a currentPrize
+    if (currentPrize === 'Try Again') {
+      // Try Again: calculem el nou premi LOCALMENT (sense servidor) i tornem a girar
       document.getElementById('try-again-toast').classList.add('visible');
-      fetchRespin();
+      currentPrize = pickFrom(FINAL_POOL);  // mai Try Again
+      // Petit delay perquè l'usuari vegi el toast, després habilitem botó
+      setTimeout(function() {
+        document.getElementById('btn-spin').disabled = false;
+      }, 800);
     } else {
-      showResult();
+      // Premi definitiu → mostra resultat
+      showResult(currentPrize);
     }
   });
 }
 
-function fetchRespin() {
-  var loadEl = document.getElementById('loading');
-  loadEl.querySelector('.loading-text').textContent = 'Preparando nueva tirada…';
-  loadEl.classList.add('active');
-
-  var done = false;
-  var timeout = setTimeout(function() {
-    if (done) return;
-    done = true;
-    loadEl.classList.remove('active');
-    assignedPrize = pickLocalPrize(true); // no Try Again en fallback
-    document.getElementById('btn-spin').disabled = false;
-  }, 8000);
-
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'respin', email: userData.email })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (done) return; done = true;
-    clearTimeout(timeout);
-    loadEl.classList.remove('active');
-    assignedPrize = data.prize || pickLocalPrize(true);
-    document.getElementById('btn-spin').disabled = false;
-  })
-  .catch(function() {
-    if (done) return; done = true;
-    clearTimeout(timeout);
-    loadEl.classList.remove('active');
-    assignedPrize = pickLocalPrize(true);
-    document.getElementById('btn-spin').disabled = false;
-  });
-}
-
 // ── RESULTAT ─────────────────────────────────────────────────────────────────
-function showResult() {
-  var info = PRIZE_INFO[assignedPrize];
-  if (!info) {
-    // Premi desconegut → tractem com Better Luck
-    assignedPrize = 'Better Luck Next Time!';
-    info = PRIZE_INFO[assignedPrize];
-  }
+function showResult(prize) {
+  var info = PRIZE_INFO[prize] || PRIZE_INFO['Better Luck Next Time!'];
   document.getElementById('result-icon').innerHTML      = info.icon;
   document.getElementById('result-icon').className      = 'result-icon ' + (info.win ? 'win' : 'loss');
   document.getElementById('result-eyebrow').textContent = info.eyebrow;
@@ -629,7 +606,7 @@ function showResult() {
   document.getElementById('result-note').textContent    = info.note;
   if (info.win) {
     document.getElementById('result-prize-box').style.display = 'block';
-    document.getElementById('result-prize-name').textContent  = assignedPrize;
+    document.getElementById('result-prize-name').textContent  = prize;
   } else {
     document.getElementById('result-prize-box').style.display = 'none';
   }
@@ -658,13 +635,23 @@ function submitForm() {
   loadEl.querySelector('.loading-text').textContent = 'Comprobando participación…';
   loadEl.classList.add('active');
 
-  var done    = false;
-  var timeout = setTimeout(function() {
-    if (done) return; done = true;
-    loadEl.classList.remove('active'); btnEl.disabled = false;
-    assignedPrize = pickLocalPrize(false);
+  var settled = false;
+
+  function proceed(prize) {
+    if (settled) return;
+    settled = true;
+    clearTimeout(fallbackTimer);
+    loadEl.classList.remove('active');
+    btnEl.disabled = false;
+    currentPrize = prize;
     showScreen('screen-wheel');
-  }, 10000);
+  }
+
+  // Fallback: si el servidor no respon en 8s, tirem amb premi local
+  var fallbackTimer = setTimeout(function() {
+    console.warn('Server timeout — using local prize');
+    proceed(pickFrom(FULL_POOL));
+  }, 8000);
 
   fetch(SCRIPT_URL, {
     method: 'POST',
@@ -672,26 +659,24 @@ function submitForm() {
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    if (done) return; done = true;
-    clearTimeout(timeout);
-    loadEl.classList.remove('active'); btnEl.disabled = false;
-    if (data.alreadyPlayed) { showError('Ya has participado anteriormente con este email.'); return; }
-    assignedPrize = data.prize || pickLocalPrize(false);
-    showScreen('screen-wheel');
+    if (data.alreadyPlayed) {
+      settled = true;
+      clearTimeout(fallbackTimer);
+      loadEl.classList.remove('active');
+      btnEl.disabled = false;
+      showError('Ya has participado anteriormente con este email.');
+      return;
+    }
+    proceed(data.prize || pickFrom(FULL_POOL));
   })
   .catch(function(err) {
-    if (done) return; done = true;
-    clearTimeout(timeout);
-    loadEl.classList.remove('active'); btnEl.disabled = false;
-    console.warn('Server error, local prize:', err);
-    assignedPrize = pickLocalPrize(false);
-    showScreen('screen-wheel');
+    console.warn('Server error — using local prize:', err);
+    proceed(pickFrom(FULL_POOL));
   });
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
-function pickLocalPrize(noTryAgain) {
-  var pool = LOCAL_POOL.filter(function(p) { return noTryAgain ? p !== PRIZE_TRY : true; });
+function pickFrom(pool) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 function showScreen(id) {
@@ -701,7 +686,8 @@ function showScreen(id) {
 }
 function showError(msg) {
   var el = document.getElementById('error-msg');
-  el.textContent = msg; el.style.display = 'block';
+  el.textContent = msg;
+  el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }

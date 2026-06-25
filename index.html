@@ -526,7 +526,7 @@ function drawWheel(angle) {
     ctx.rotate(start + ARC / 2);
     ctx.textAlign = 'right';
     ctx.fillStyle = s.color === '#E2001A' ? '#FFFFFF' : '#1A1A1A';
-    ctx.font = 'bold 13px "Barlow Condensed", "Arial Narrow", sans-serif';
+    ctx.font = 'bold 16px "Barlow Condensed", "Arial Narrow", sans-serif';
     var lines = s.label.split('\n');
     lines.forEach(function(line, li) {
       ctx.fillText(line.toUpperCase(), r - 12, (li - (lines.length - 1) / 2) * 15 + 5);

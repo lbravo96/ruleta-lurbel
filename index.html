@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruleta Lurbel × Like Sport</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap');
+@font-face{font-family:'Futura Std';src:url('./fonts/FuturaStd-Book.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Futura Std';src:url('./fonts/FuturaStd-Heavy.woff2') format('woff2');font-weight:700 800;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--red:#E2001A;--reddark:#B3191A;--black:#1A1A1A;--grey:#D9D8D6;--mid:#C8C7C5;--white:#fff}
-html,body{min-height:100%;font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
+html,body{min-height:100%;font-family:'Futura Std',Arial,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden}
 
 /* HEADER */
 header{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(26,26,26,.96);border-bottom:1px solid rgba(255,255,255,.08)}
 header img{height:24px}
-.htag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.htag{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
 
 /* SCREENS */
 .screen{display:none;min-height:100vh;padding-top:56px}
@@ -24,14 +25,14 @@ header img{height:24px}
 .hero-bg{position:fixed;inset:0;background:url('https://lurbel.eu/uploads/lurbel-spring-summer-26.jpg') center/cover no-repeat;z-index:0}
 .hero-ov{position:fixed;inset:0;background:linear-gradient(135deg,rgba(26,26,26,.9) 0%,rgba(226,0,26,.15) 100%);z-index:1}
 .fbox{position:relative;z-index:2;width:100%;max-width:460px;margin:32px 16px;background:rgba(26,26,26,.85);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);padding:36px 32px}
-.feyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
-.ftitle{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:800;line-height:1;text-transform:uppercase;margin-bottom:6px}
+.feyebrow{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.ftitle{font-family:'Futura Std',Arial,sans-serif;font-size:40px;font-weight:800;line-height:1;text-transform:uppercase;margin-bottom:6px}
 .ftitle span{color:var(--red)}
 .fsub{font-size:13px;color:var(--mid);line-height:1.5;margin-bottom:28px}
 .frow{display:flex;gap:10px}
 .fg{display:flex;flex-direction:column;flex:1;margin-bottom:14px}
-.fg label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
-.fg input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color .2s;width:100%}
+.fg label{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+.fg input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--white);font-family:'Futura Std',Arial,sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color .2s;width:100%}
 .fg input:focus{border-color:var(--red)}
 .fg input::placeholder{color:rgba(255,255,255,.25)}
 .chk{display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;cursor:pointer}
@@ -39,7 +40,7 @@ header img{height:24px}
 .chk span{font-size:12px;color:var(--mid);line-height:1.5}
 .chk a{color:var(--mid);text-decoration:underline}
 .errmsg{display:none;background:rgba(226,0,26,.15);border:1px solid var(--red);color:#ff7070;font-size:13px;padding:11px 13px;margin-bottom:14px}
-.btnred{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:15px 20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.btnred{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Futura Std',Arial,sans-serif;font-size:16px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;padding:15px 20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .btnred:hover{background:var(--reddark)}
 .btnred:disabled{background:#555;cursor:not-allowed}
 
@@ -47,18 +48,19 @@ header img{height:24px}
 #s-wheel{align-items:center;justify-content:center;background:var(--black);padding:32px 16px}
 .wsection{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;max-width:540px}
 .whead{text-align:center}
-.weyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
-.whead h2{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;text-transform:uppercase}
+.weyebrow{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.whead h2{font-family:'Futura Std',Arial,sans-serif;font-size:30px;font-weight:800;text-transform:uppercase}
 .toast{display:none;background:rgba(226,0,26,.12);border:1px solid rgba(226,0,26,.4);padding:12px 20px;text-align:center}
 .toast.show{display:block}
-.toast p{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.toast.error{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+.toast p{font-family:'Futura Std',Arial,sans-serif;font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .toast span{color:var(--red)}
 .wwrap{position:relative;width:460px;height:460px}
 #wcanvas{border-radius:50%;box-shadow:0 0 0 5px var(--black),0 0 0 9px rgba(226,0,26,.35),0 20px 50px rgba(0,0,0,.7);display:block}
 .wptr{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:30px solid var(--red);filter:drop-shadow(0 2px 6px rgba(226,0,26,.8));z-index:10}
 .wcap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;background:var(--black);border-radius:50%;border:3px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 0 0 2px rgba(226,0,26,.25)}
 .wcap svg{width:32px;height:32px}
-.btnspin{background:var(--red);color:var(--white);border:none;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:17px 60px;cursor:pointer;transition:background .2s}
+.btnspin{background:var(--red);color:var(--white);border:none;font-family:'Futura Std',Arial,sans-serif;font-size:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:17px 60px;cursor:pointer;transition:background .2s}
 .btnspin:hover{background:var(--reddark)}
 .btnspin:disabled{background:#444;cursor:not-allowed;opacity:.6}
 
@@ -68,12 +70,12 @@ header img{height:24px}
 .ricon{width:78px;height:78px;margin:0 auto 22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px}
 .ricon.win{background:rgba(226,0,26,.15);border:2px solid var(--red)}
 .ricon.loss{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15)}
-.reyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
-.rtitle{font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:14px}
+.reyebrow{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.rtitle{font-family:'Futura Std',Arial,sans-serif;font-size:42px;font-weight:800;text-transform:uppercase;line-height:1;margin-bottom:14px}
 .rbody{font-size:14px;color:var(--mid);line-height:1.6;margin-bottom:28px;max-width:340px;margin-left:auto;margin-right:auto}
 .rbox{background:rgba(226,0,26,.1);border:1px solid rgba(226,0,26,.3);padding:18px 22px;margin-bottom:28px}
-.rbox .rlabel{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
-.rbox .rname{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;text-transform:uppercase}
+.rbox .rlabel{font-family:'Futura Std',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.rbox .rname{font-family:'Futura Std',Arial,sans-serif;font-size:26px;font-weight:800;text-transform:uppercase}
 .rnote{font-size:12px;color:rgba(255,255,255,.32);line-height:1.5}
 
 /* LOADING */
@@ -81,7 +83,7 @@ header img{height:24px}
 .loadov.show{display:flex}
 .spinner{width:38px;height:38px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loadtxt{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
+.loadtxt{font-family:'Futura Std',Arial,sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid)}
 
 @media(max-width:520px){
   .fbox{padding:24px 18px;margin:20px 10px}
@@ -174,65 +176,56 @@ header img{height:24px}
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   CONFIGURACIÓ
+   CONFIGURACIÓN
 ═══════════════════════════════════════════════════════ */
 var GAS_URL = 'https://script.google.com/macros/s/AKfycbxWc6mZtAgUN2hDMcxBQ4UEfPQxCVAbwehH8gWocs_RU75p8Qi8NhBeE7vW9J7dPeoFfg/exec';
 
-/* ═══════════════════════════════════════════════════════
-   PREMIS — strings exactes, mai canviar
-═══════════════════════════════════════════════════════ */
+/* Premios — deben coincidir exactamente con Code.gs */
 var P_LURBEL   = 'Lurbel Pack';
 var P_GIFT     = 'Gift';
 var P_DISCOUNT = 'Discount Coupon';
 var P_BETTER   = 'Better Luck Next Time!';
 var P_TRY      = 'Try Again';
 
-/* Pool inicial (el servidor pot retornar qualsevol) */
-var POOL_FULL = [
-  P_BETTER, P_BETTER, P_BETTER, P_BETTER,
-  P_TRY, P_TRY, P_TRY, P_TRY,
-  P_DISCOUNT, P_GIFT, P_LURBEL
-];
-
-/* Pool Try Again: mai retorna Try Again per evitar bucles infinits */
-var POOL_RETRY = [
-  P_BETTER, P_BETTER, P_BETTER, P_BETTER,
-  P_DISCOUNT, P_GIFT, P_LURBEL
-];
-
 /* ═══════════════════════════════════════════════════════
-   SECTORS — 11 caselles
-   4× Better Luck + 4× Try Again + 1× Discount + 1× Gift + 1× Lurbel Pack
+   SECTORES — 12 casillas, en orden horario desde arriba.
+   Esta distribución replica la captura adjunta:
+   5× Better Luck + 4× Try Again + 1× Discount + 1× Gift + 1× Lurbel Pack
 ═══════════════════════════════════════════════════════ */
+var RED  = '#E2001A';
+var GREY = '#E9E9E9';
 var SECTORS = [
-  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
-  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
-  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
-  {t: P_DISCOUNT, c:'#D9D8D6', label:'Discount\nCoupon'},
-  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
-  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
-  {t: P_LURBEL,   c:'#E2001A', label:'Lurbel Pack'},
-  {t: P_TRY,      c:'#D9D8D6', label:'Try Again'},
-  {t: P_BETTER,   c:'#E2001A', label:'Better Luck\nNext Time!'},
-  {t: P_GIFT,     c:'#D9D8D6', label:'Gift'},
-  {t: P_TRY,      c:'#E2001A', label:'Try Again'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
+  {t:P_DISCOUNT, c:GREY, label:'Discount\nCoupon',        icon:'coupon'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
+  {t:P_TRY,      c:GREY, label:'Try Again',               icon:'retry'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
+  {t:P_GIFT,     c:GREY, label:'Gift',                    icon:'gift'},
+  {t:P_TRY,      c:RED,  label:'Try Again',               icon:'retry'},
+  {t:P_BETTER,   c:GREY, label:'Better Luck\nNext Time!', icon:'sad'},
+  {t:P_TRY,      c:RED,  label:'Try Again',               icon:'retry'},
+  {t:P_LURBEL,   c:GREY, label:'Lurbel Pack',             icon:'pack'},
+  {t:P_BETTER,   c:RED,  label:'Better Luck\nNext Time!', icon:'sad'},
+  {t:P_TRY,      c:GREY, label:'Try Again',               icon:'retry'}
 ];
 
+var KNOWN_PRIZES = [P_LURBEL, P_GIFT, P_DISCOUNT, P_BETTER, P_TRY];
+
 /* ═══════════════════════════════════════════════════════
-   PANTALLA DE RESULTAT — per premi
+   PANTALLA DE RESULTADO
 ═══════════════════════════════════════════════════════ */
 var RESULTS = {};
-RESULTS[P_LURBEL]   = {win:true,  icon:'🎉', ey:'¡Enhorabuena!',       ti:'¡Has ganado el<br>Lurbel Pack!',       bo:'¡El premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo.', no:'Muestra esta pantalla en tienda.'};
-RESULTS[P_GIFT]     = {win:true,  icon:'🎁', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>regalo sorpresa!',   bo:'Pasa por el mostrador de Like Sport y recoge tu regalo Lurbel.',                              no:'Muestra esta pantalla en tienda.'};
-RESULTS[P_DISCOUNT] = {win:true,  icon:'🎟', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>cupón descuento!',  bo:'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',               no:'Muestra esta pantalla en tienda.'};
-RESULTS[P_BETTER]   = {win:false, icon:'😅', ey:'Sin suerte esta vez', ti:'Mejor suerte<br>la próxima',          bo:'¡Gracias por participar!',                                                                     no:''};
+RESULTS[P_LURBEL]   = {win:true,  icon:'🎉', ey:'¡Enhorabuena!',       ti:'¡Has ganado el<br>Lurbel Pack!',      bo:'¡El premio más especial de la ruleta! El equipo de Like Sport se pondrá en contacto contigo.', no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_GIFT]     = {win:true,  icon:'🎁', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>regalo sorpresa!',  bo:'Pasa por el mostrador de Like Sport y recoge tu regalo Lurbel.',                              no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_DISCOUNT] = {win:true,  icon:'🎟', ey:'¡Enhorabuena!',       ti:'¡Has ganado un<br>cupón descuento!', bo:'Pasa por Like Sport y disfruta de tu descuento exclusivo en productos Lurbel.',               no:'Muestra esta pantalla en tienda.'};
+RESULTS[P_BETTER]   = {win:false, icon:'😅', ey:'Sin suerte esta vez', ti:'Mejor suerte<br>la próxima',         bo:'¡Gracias por participar!',                                                                    no:''};
 
 /* ═══════════════════════════════════════════════════════
-   ESTAT GLOBAL
+   ESTADO GLOBAL
 ═══════════════════════════════════════════════════════ */
 var spinning    = false;
 var spinAngle   = 0;
-var nextPrize   = null;   /* premi que ha de mostrar la PROPERA tirada */
+var nextPrize   = null;
 var userData    = {};
 
 /* ═══════════════════════════════════════════════════════
@@ -246,64 +239,189 @@ var ARC    = (2 * Math.PI) / N;
 function drawWheel(a) {
   var cx = canvas.width / 2, cy = canvas.height / 2, r = cx - 4;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   for (var i = 0; i < N; i++) {
     var s = SECTORS[i];
-    var s0 = a + i * ARC - Math.PI / 2;
-    var s1 = s0 + ARC;
-    /* fill */
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s0,s1); ctx.closePath();
-    ctx.fillStyle = s.c; ctx.fill();
-    /* border */
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s0,s1); ctx.closePath();
-    ctx.strokeStyle = 'rgba(26,26,26,0.65)'; ctx.lineWidth = 2; ctx.stroke();
-    /* text */
+    var mid = a + i * ARC - Math.PI / 2; // sector 0 centrado arriba
+    var s0 = mid - ARC / 2;
+    var s1 = mid + ARC / 2;
+    var ink = s.c === RED ? '#FFFFFF' : '#1A1A1A';
+
+    // sector
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, s0, s1);
+    ctx.closePath();
+    ctx.fillStyle = s.c;
+    ctx.fill();
+
+    // separador fino, como la captura
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, s0, s1);
+    ctx.closePath();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // icono y texto rotados con el sector
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(s0 + ARC / 2);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = s.c === '#E2001A' ? '#fff' : '#1a1a1a';
-    ctx.font = 'bold 15px "Barlow Condensed","Arial Narrow",Arial,sans-serif';
+    ctx.rotate(mid);
+
+    drawSectorIcon(s.icon, r * 0.49, 0, ink);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = ink;
+    ctx.font = '700 13px "Futura Std", Arial, sans-serif';
     var lines = s.label.split('\n');
-    var lh = 14;
+    var lh = 13;
+    var tx = r * 0.76;
     for (var l = 0; l < lines.length; l++) {
-      var yo = (l - (lines.length - 1) / 2) * lh + 4;
-      ctx.fillText(lines[l].toUpperCase(), r - 12, yo);
+      var ty = -((lines.length - 1) * lh) / 2 + l * lh;
+      ctx.fillText(lines[l].toUpperCase(), tx, ty);
     }
     ctx.restore();
   }
-  /* outer ring */
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 3; ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#F6F6F6';
+  ctx.lineWidth = 3;
+  ctx.stroke();
 }
+
+function drawSectorIcon(type, x, y, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = color;
+  ctx.fillStyle = 'transparent';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  if (type === 'sad') drawSadIcon(color);
+  else if (type === 'retry') drawRetryIcon(color);
+  else if (type === 'coupon') drawCouponIcon(color);
+  else if (type === 'gift') drawGiftIcon(color);
+  else if (type === 'pack') drawPackIcon(color);
+
+  ctx.restore();
+}
+
+function drawSadIcon(color) {
+  ctx.beginPath();
+  ctx.arc(0, 0, 18, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-8, -4); ctx.lineTo(-2, 2); ctx.moveTo(-2, -4); ctx.lineTo(-8, 2);
+  ctx.moveTo(8, -4); ctx.lineTo(2, 2); ctx.moveTo(2, -4); ctx.lineTo(8, 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 12, 8, Math.PI * 1.15, Math.PI * 1.85);
+  ctx.stroke();
+}
+
+function drawRetryIcon(color) {
+  ctx.beginPath();
+  ctx.arc(0, 0, 19, Math.PI * 0.1, Math.PI * 1.25);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-18, -6); ctx.lineTo(-18, 9); ctx.lineTo(-6, 1);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, 19, Math.PI * 1.1, Math.PI * 2.25);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(18, 6); ctx.lineTo(18, -9); ctx.lineTo(6, -1);
+  ctx.stroke();
+}
+
+function drawCouponIcon(color) {
+  ctx.save();
+  ctx.rotate(Math.PI / 14);
+  ctx.beginPath();
+  ctx.rect(-22, -13, 44, 26);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-5, -10); ctx.lineTo(-5, 10);
+  ctx.setLineDash([2, 3]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.font = '700 19px "Futura Std", Arial, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = color;
+  ctx.fillText('%', 8, 0);
+  ctx.restore();
+}
+
+function drawGiftIcon(color) {
+  ctx.beginPath();
+  ctx.rect(-18, -2, 36, 22);
+  ctx.rect(-21, -11, 42, 9);
+  ctx.moveTo(0, -11); ctx.lineTo(0, 20);
+  ctx.moveTo(-21, -2); ctx.lineTo(21, -2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(-7, -14, 7, Math.PI * 0.1, Math.PI * 1.2);
+  ctx.arc(7, -14, 7, Math.PI * -0.2, Math.PI * 0.9, true);
+  ctx.stroke();
+}
+
+function drawPackIcon(color) {
+  drawMiniBox(-13, -16, 17, 17);
+  drawMiniBox(4, -16, 17, 17);
+  drawMiniBox(-21, 1, 17, 17);
+  drawMiniBox(-4, 1, 17, 17);
+  drawMiniBox(13, 1, 17, 17);
+}
+
+function drawMiniBox(x, y, w, h) {
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.moveTo(x + w / 2, y); ctx.lineTo(x + w / 2, y + h);
+  ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2);
+  ctx.stroke();
+}
+
 drawWheel(0);
+if (document.fonts) {
+  document.fonts.ready.then(function() { drawWheel(spinAngle); });
+}
 
 /* ═══════════════════════════════════════════════════════
-   ANIMACIÓ
-   prizeName: string exacte del premi que ha d'apuntar el punter
-   onEnd(prizeName): crida quan l'animació acaba
+   ANIMACIÓN
 ═══════════════════════════════════════════════════════ */
 function animate(prizeName, onEnd) {
-  /* Troba tots els sectors que corresponen a aquest premi */
   var candidates = [];
   for (var i = 0; i < N; i++) {
     if (SECTORS[i].t === prizeName) candidates.push(i);
   }
-  if (candidates.length === 0) candidates = [0]; /* fallback segur */
+  if (!candidates.length) {
+    showToast('No hemos podido validar el premio. Inténtalo de nuevo.', true);
+    document.getElementById('btn-spin').disabled = false;
+    return;
+  }
+
   var idx = candidates[Math.floor(Math.random() * candidates.length)];
 
-  /* Angle objectiu: centre del sector idx ha d'alinear-se amb el punter (dalt = -π/2) */
-  var targetAng = -(idx * ARC + ARC / 2) + Math.PI / 2;
-  /* Afegim voltes senceres per fer l'animació realista */
-  var fullTurns = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
-  /* Normalitzem l'angle actual a [0, 2π) per calcular bé la distància */
-  var curNorm = ((spinAngle % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
-  var tarNorm = ((targetAng % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
-  var delta   = tarNorm - curNorm;
-  if (delta < 0) delta += 2*Math.PI;
-  var finalAngle = spinAngle + fullTurns + delta;
+  // Con drawWheel(), el centro del sector idx está en: spinAngle + idx*ARC - PI/2.
+  // Para que quede bajo el puntero superior (-PI/2), spinAngle debe ser -idx*ARC.
+  // Añadimos un pequeño desplazamiento controlado para que no caiga siempre al centro.
+  var jitter = (Math.random() - 0.5) * ARC * 0.45;
+  var targetAng = -idx * ARC + jitter;
 
-  var t0   = null;
-  var DUR  = 5000;
+  var fullTurns = (5 + Math.floor(Math.random() * 4)) * 2 * Math.PI;
+  var curNorm = normalizeAngle(spinAngle);
+  var tarNorm = normalizeAngle(targetAng);
+  var delta = tarNorm - curNorm;
+  if (delta < 0) delta += 2 * Math.PI;
+
+  var finalAngle = spinAngle + fullTurns + delta;
+  var t0 = null;
+  var DUR = 5000;
   var from = spinAngle;
 
   function ease(x) { return 1 - Math.pow(1 - x, 4); }
@@ -320,48 +438,67 @@ function animate(prizeName, onEnd) {
       requestAnimationFrame(frame);
     } else {
       spinning = false;
-      onEnd(prizeName); /* retornem el premi que hem mostrat */
+      onEnd(prizeName);
     }
   }
   requestAnimationFrame(frame);
 }
 
 /* ═══════════════════════════════════════════════════════
-   BOTÓ GIRAR
+   BOTÓN GIRAR
 ═══════════════════════════════════════════════════════ */
 function spinWheel() {
   if (spinning) return;
+  clearToast();
 
-  /* Amaguem toast anterior */
-  document.getElementById('toast').classList.remove('show');
+  if (!nextPrize || !isKnownPrize(nextPrize)) {
+    showToast('No hay premio validado. Vuelve a enviar el formulario.', true);
+    return;
+  }
 
-  /* El premi d'AQUESTA tirada és nextPrize (assignat pel servidor o local) */
   var thisPrize = nextPrize;
+  nextPrize = null;
 
   animate(thisPrize, function(shown) {
-    /* shown === thisPrize sempre */
     if (shown === P_TRY) {
-      /* Try Again: mostrem toast i preparem NOU premi per a la propera tirada */
-      document.getElementById('toast').classList.add('show');
-      /* Nou premi de la pool RETRY (mai Try Again) */
-      nextPrize = randFrom(POOL_RETRY);
-      /* Habilitem botó després d'1 segon */
-      setTimeout(function() {
-        document.getElementById('btn-spin').disabled = false;
-      }, 1000);
+      showToast('🔄 ¡Try Again! Preparando tu segundo intento…', false);
+      prepareServerRespin();
     } else {
-      /* Premi definitiu → mostra resultat */
       showResult(shown);
     }
   });
 }
 
+function prepareServerRespin() {
+  var btn = document.getElementById('btn-spin');
+  btn.disabled = true;
+
+  postToServer({ action:'respin', email:userData.email }, 10000)
+    .then(function(data) {
+      if (!data || !data.ok) {
+        throw new Error((data && data.error) || 'Error de servidor');
+      }
+      var p = normalizePrize(data.prize);
+      if (!isKnownPrize(p) || p === P_TRY) {
+        throw new Error('Premio de segundo intento no válido');
+      }
+      nextPrize = p;
+      showToast('🔄 ¡Try Again! Vuelve a girar.', false);
+      setTimeout(function() { btn.disabled = false; }, 700);
+    })
+    .catch(function(err) {
+      nextPrize = null;
+      showToast('No hemos podido preparar el segundo intento. Revisa la conexión y vuelve a intentarlo.', true);
+      btn.disabled = false;
+    });
+}
+
 /* ═══════════════════════════════════════════════════════
-   RESULTAT
+   RESULTADO
 ═══════════════════════════════════════════════════════ */
 function showResult(prize) {
   var r = RESULTS[prize];
-  if (!r) { r = RESULTS[P_BETTER]; prize = P_BETTER; } /* mai hauria de passar */
+  if (!r) { r = RESULTS[P_BETTER]; prize = P_BETTER; }
 
   document.getElementById('r-icon').textContent    = r.icon;
   document.getElementById('r-icon').className      = 'ricon ' + (r.win ? 'win' : 'loss');
@@ -379,12 +516,12 @@ function showResult(prize) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   FORMULARI
+   FORMULARIO
 ═══════════════════════════════════════════════════════ */
 function submitForm() {
   var nombre    = document.getElementById('f-nombre').value.trim();
   var apellidos = document.getElementById('f-apellidos').value.trim();
-  var email     = document.getElementById('f-email').value.trim();
+  var email     = document.getElementById('f-email').value.trim().toLowerCase();
   var ciudad    = document.getElementById('f-ciudad').value.trim();
   var lopd      = document.getElementById('f-lopd').checked;
 
@@ -400,67 +537,76 @@ function submitForm() {
   btn.disabled = true;
   showLoad('Comprobando participación…');
 
-  /* Fem el fetch amb timeout de 8s.
-     Si el servidor respon → usem el seu premi.
-     Si falla o tarda massa → assignem premi local.
-     En ambdós casos passem a la pantalla de la ruleta. */
-  var done = false;
-
-  var timer = setTimeout(function() {
-    if (done) return;
-    done = true;
-    hideLoad();
-    btn.disabled = false;
-    nextPrize = randFrom(POOL_FULL);
-    showScreen('s-wheel');
-  }, 8000);
-
-  fetch(GAS_URL, {
-    method:'POST',
-    body: JSON.stringify({
-      action:'check',
-      email: email,
-      nombre: nombre,
-      apellidos: apellidos,
-      ciudad: ciudad
-    })
-  })
-  .then(function(res) { return res.json(); })
+  postToServer({
+    action:'check',
+    email: email,
+    nombre: nombre,
+    apellidos: apellidos,
+    ciudad: ciudad
+  }, 10000)
   .then(function(data) {
-    if (done) return;
-    done = true;
-    clearTimeout(timer);
     hideLoad();
     btn.disabled = false;
 
+    if (!data || !data.ok) {
+      showErr((data && data.error) || 'No hemos podido validar la participación. Inténtalo de nuevo.');
+      return;
+    }
     if (data.alreadyPlayed) {
       showErr('Ya has participado anteriormente con este email.');
       return;
     }
-    /* El servidor retorna data.prize — validem que sigui un premi conegut */
-    var p = data.prize;
-    if (p !== P_LURBEL && p !== P_GIFT && p !== P_DISCOUNT && p !== P_BETTER && p !== P_TRY) {
-      p = randFrom(POOL_FULL); /* premi desconegut → local */
+
+    var p = normalizePrize(data.prize);
+    if (!isKnownPrize(p)) {
+      showErr('El servidor ha devuelto un premio no válido. Revisa la configuración.');
+      return;
     }
+
     nextPrize = p;
     showScreen('s-wheel');
   })
   .catch(function() {
-    if (done) return;
-    done = true;
-    clearTimeout(timer);
     hideLoad();
     btn.disabled = false;
-    nextPrize = randFrom(POOL_FULL);
-    showScreen('s-wheel');
+    showErr('No hemos podido conectar con el servidor. Inténtalo de nuevo en unos segundos.');
   });
 }
 
 /* ═══════════════════════════════════════════════════════
    HELPERS
 ═══════════════════════════════════════════════════════ */
-function randFrom(pool) {
-  return pool[Math.floor(Math.random() * pool.length)];
+function postToServer(payload, timeoutMs) {
+  var controller = window.AbortController ? new AbortController() : null;
+  var timer = setTimeout(function() {
+    if (controller) controller.abort();
+  }, timeoutMs || 10000);
+
+  var opts = {
+    method:'POST',
+    body: JSON.stringify(payload)
+    // No añadimos Content-Type: application/json para evitar preflight CORS innecesario en Apps Script.
+  };
+  if (controller) opts.signal = controller.signal;
+
+  return fetch(GAS_URL, opts)
+    .then(function(res) { return res.json(); })
+    .then(function(data) { clearTimeout(timer); return data; })
+    .catch(function(err) { clearTimeout(timer); throw err; });
+}
+
+function normalizePrize(value) {
+  var v = String(value || '').trim().toLowerCase();
+  for (var i = 0; i < KNOWN_PRIZES.length; i++) {
+    if (KNOWN_PRIZES[i].toLowerCase() === v) return KNOWN_PRIZES[i];
+  }
+  return '';
+}
+function isKnownPrize(value) {
+  return KNOWN_PRIZES.indexOf(value) !== -1;
+}
+function normalizeAngle(a) {
+  return ((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 }
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
@@ -469,7 +615,8 @@ function showScreen(id) {
 }
 function showErr(msg) {
   var el = document.getElementById('errmsg');
-  el.textContent = msg; el.style.display = 'block';
+  el.textContent = msg;
+  el.style.display = 'block';
   el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function showLoad(txt) {
@@ -478,6 +625,17 @@ function showLoad(txt) {
 }
 function hideLoad() {
   document.getElementById('loadov').classList.remove('show');
+}
+function showToast(msg, isError) {
+  var el = document.getElementById('toast');
+  el.classList.toggle('error', !!isError);
+  el.innerHTML = '<p>' + msg + '</p>';
+  el.classList.add('show');
+}
+function clearToast() {
+  var el = document.getElementById('toast');
+  el.classList.remove('show');
+  el.classList.remove('error');
 }
 </script>
 </body>
